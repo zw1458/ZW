@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+        <struts>
+        <package name="login" extends="json-default" namespace="/staff">
+
+                <action name="staffAction_login" class="staffAction" method="login">
+                        <result name="success">/pages/frame.jsp</result>
+                        <result name="input">/pages/login.jsp</result>
+                </action>
+
+                <action name="addStaff" class="staffAction" method="addStaff">
+                        <result name="success">/pages/staff/listStaff.jsp</result>
+                        <result name="input">/pages/error.jsp</result>
+                </action>
+
+        </package>
+</struts>
