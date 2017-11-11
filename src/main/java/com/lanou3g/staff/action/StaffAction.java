@@ -7,6 +7,7 @@ import com.lanou3g.staff.service.impl.StaffServiceImpl;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -24,25 +25,51 @@ public class StaffAction extends BaseAction<Staff, StaffServiceImpl> {
     @Resource
     private StaffService staffService;
     private Staff staff = getModel();
-
+    private List<Staff> allList;
+    private String staffId;
 
 
     public String login() {
 //        sessionPut(LOGIN_KEY,);
-        List<Staff> all = staffService.findAll();
-        for (Staff staff1 : all) {
-            if (staff1.getLoginName().equals(staff.getLoginName()) && staff1.getLoginPwd().equals(staff.getLoginPwd())) {
-                return SUCCESS;
-            }
-            break;
+        Staff staff1 = staffService.login(staff);
+        if (staff1 != null) {
+            sessionPut("login", staff.getLoginName());
+            return SUCCESS;
         }
+        addFieldError("msg","请输入正确的用户名和密码");
         return INPUT;
+
     }
 
-    public String addStaff(){
-        staffService.save(staff);
+
+    public String addStaff() {
+        boolean saveList = staffService.save(staff);
+        List<Staff> all = staffService.findAll();
+        applicationPut("allList",all);
         return SUCCESS;
     }
+
+    @SkipValidation
+    public String findStaff(){
+        allList = staffService.findAll();
+        applicationPut("allList",allList);
+        return SUCCESS;
+    }
+
+
+
+    public String saveOrUpdate(){
+        List<Staff> list = staffService.findAll();
+        staffService.saveOrUpdate(staff);
+        applicationPut("allList",list);
+        return SUCCESS;
+
+    }
+
+
+
+
+
 
 
     public Staff getStaff() {
@@ -67,5 +94,22 @@ public class StaffAction extends BaseAction<Staff, StaffServiceImpl> {
 
     public void setLoginPwd(String loginPwd) {
         this.loginPwd = loginPwd;
+    }
+
+
+    public List<Staff> getAllList() {
+        return allList;
+    }
+
+    public void setAllList(List<Staff> allList) {
+        this.allList = allList;
+    }
+
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
+    }
+
+    public String getStaffId() {
+        return staffId;
     }
 }
