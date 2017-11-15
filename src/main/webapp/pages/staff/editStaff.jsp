@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -6,6 +7,43 @@
 <title>无标题文档</title>
 <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js"></script>
+	<script>
+
+		<%--当选择部门的时候会执行--%>
+		function onDeptSelected(value) {
+			var data = new FormData();
+			data.append("deptId", value);
+
+			var xhr = new XMLHttpRequest();
+			xhr.withCredentials = true;
+
+			xhr.addEventListener("readystatechange", function () {
+				if (this.readyState === 4) {
+					console.log(this.responseText);
+					json = eval('(' + this.responseText + ')');
+
+					postSelect = document.getElementById("post");
+					optionEle = postSelect.getElementsByTagName("option");
+					length = optionEle.length;
+					for (var i = 0; i < length; i++) {
+						postSelect.removeChild(optionEle[0]);
+					}
+					postSelect.innerHTML = "<option value = '-1'>---请选择---</option>";
+					for (var i = 0; i < json.length; i++) {
+						option = document.createElement("option");
+						option.setAttribute("value", json[i].postId);
+						text = document.createTextNode(json[i].postName);
+						option.appendChild(text);
+						postSelect.appendChild(option);
+					}
+				}
+			});
+
+			xhr.open("POST", "http://localhost:8080/staff/findPost.action");
+
+			xhr.send(data);
+		}
+		</script>
 </head>
 
 <body class="emp_body">
@@ -33,20 +71,20 @@
   </tr>
 </table>
 
-<form action="/crm2/staff/staffAction_edit.action" method="post">
+<form action="/staff/editStaff2.action" method="post">
 	
-	<input type="hidden" name="staffId" value="2c9091c14c78e58b014c78e7ecd90007"/>
+	<input type="hidden" name="staffId" value="${staffIdList.staffId}"/>
 	
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	 <tr>
 	    <td>登录名：</td>
-	    <td><input type="text" name="loginName" value="赵六" /> </td>
+	    <td><input type="text" name="loginName" value="${staffIdList.loginName}" /> </td>
 	    <td>密码：</td>
-	    <td><input type="password" name="loginPwd" value="54dfc11c8e9c49bab6068f473f913be9" /> </td>
+	    <td><input type="password" name="loginPwd" value="${staffIdList.loginPwd}" /> </td>
 	  </tr>
 	 <tr>
 	    <td>姓名：</td>
-	    <td><input type="text" name="staffName" value="赵六" /> </td>
+	    <td><input type="text" name="staffName" value="${staffIdList.staffName}" /> </td>
 	    <td>性别：</td>
 	    <td>
 	    	<input type="radio" name="gender" checked="checked" value="男"/>男
@@ -56,26 +94,25 @@
 	 <tr>
 	    <td width="10%">所属部门：</td>
 	    <td width="20%">
-	    	<select name="crmPost.crmDepartment.depId"  onchange="changePost(this)">
-			    <option value="">----请--选--择----</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000001" selected="selected">教学部</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
+			<select onchange="onDeptSelected(value)" name="deptId">
+				<option value="-1">---请选择---</option>
+				<s:iterator value="departmentList" var="deptm">
+					<option value="${deptm.deptId}">${deptm.deptName}</option>
+				</s:iterator>
 			</select>
 
 	    </td>
 	    <td width="8%">职务：</td>
 	    <td width="62%">
-	    	<select name="crmPost.postId" id="postSelectId">
-			    <option value="">----请--选--择----</option>
-			    <option value="2c9091c14c78e58b014c78e6b34a0003">总监</option>
-			    <option value="2c9091c14c78e58b014c78e6d4510004" selected="selected">讲师</option>
+			<select id="post" name="postId">
+				<option value="-1">---请选择---</option>
 			</select>
 	    </td>
 	  </tr>
 	  <tr>
 	    <td width="10%">入职时间：</td>
 	    <td width="20%">
-	    	<input type="text" name="onDutyDate" value="2012-02-12" readonly="readonly" onfocus="c.showMoreDay=true; c.show(this);"/>
+	    	<input type="text" name="onDutyDate" value="${staffIdList.onDutyDate}" readonly="readonly" onfocus="c.showMoreDay=true; c.show(this);"/>
 	    </td>
 	    <td width="8%"></td>
 	    <td width="62%"></td>
