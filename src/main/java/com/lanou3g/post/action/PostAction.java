@@ -28,6 +28,7 @@ public class PostAction extends BaseAction<Post,PostServiceImpl> {
     private List<Department> departmentList;
 
 
+    private String deptId;
 
     public String save(){
         postService.save(post);
@@ -46,11 +47,10 @@ public class PostAction extends BaseAction<Post,PostServiceImpl> {
 
 
    public String edit(){
+       post.setDept(new Department(deptId));
        postService.edit(post);
        return SUCCESS;
    }
-
-
 
 
 
@@ -82,6 +82,11 @@ public class PostAction extends BaseAction<Post,PostServiceImpl> {
         this.departmentList = departmentList;
     }
 
+    public String getDeptId() {
+        return deptId;
+    }
 
-
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
 }
