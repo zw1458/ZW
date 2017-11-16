@@ -10,9 +10,64 @@
                         <result name="input">/pages/login.jsp</result>
                 </action>
 
-                <action name="addStaff" class="staffAction" method="addStaff">
+
+                <action name="findStaff" class="staffAction" method="findStaff">
                         <result name="success">/pages/staff/listStaff.jsp</result>
                         <result name="input">/pages/error.jsp</result>
+                </action>
+
+                <action name="addStaff" class="staffAction" method="addStaff">
+                        <result name="success" type="redirectAction">findStaff</result>
+                        <result name="input">/pages/error.jsp</result>
+                </action>
+
+                <action name="findDept" class="staffAction" method="findAllDept">
+                        <result name="success">/pages/staff/addStaff.jsp</result>
+                </action>
+
+                <action name="findPost" class="staffAction" method="findAllPost">
+                        <result name="success" type="json">
+                                <param name="root">queryStaffPost</param>
+                                <param name="includeProperties">\[\d\]\.postId,\[\d\]\.postName</param>
+                        </result>
+                        <result name="input">/pages/error.jsp</result>
+                </action>
+
+
+                <action name="editStaff" class="staffAction" method="editStaff">
+                        <result name="success">/pages/staff/editStaff.jsp</result>
+                        <result name="input">/pages/error.jsp</result>
+                </action>
+
+
+                <action name="editStaff2" class="staffAction" method="addStaff">
+                        <result name="success" type="redirectAction">findStaff</result>
+                        <result name="input">/pages/error.jsp</result>
+                </action>
+
+
+                <!--<action name="editS" class="staffAction">-->
+                        <!--<result name="success">/pages/staff/editStaff.jsp</result>-->
+                        <!--<result name="input">/pages/error.jsp</result>-->
+                <!--</action>-->
+
+
+                <action name="findStaffByDeptIdandPostId"
+                        class="staffAction"
+                        method="findStaffByDeptIdandPostId">
+                        <result name="success" type="redirectAction">findStaff</result>
+                        <result name="input">/pages/error.jsp</result>
+                </action>
+
+                <action name="staffsJson"
+                        class="staffAction"
+                        method="findStaffByDeptIdandPostId">
+                        <result name="success" type="json">
+                                <param name="root">findStaffByDeptIdAndPostIdList</param>
+                                <param name="excludeProperties">\[\d\]\.dept\.posts,\[\d\]\.dept\.staffs,
+                                        \[\d\]\.post\.staffs,\[\d\]\.post\.dept
+                                </param>
+                        </result>
                 </action>
 
         </package>
