@@ -14,6 +14,13 @@ public class Post {
     private Set<Staff> staffs = new HashSet<>();
     private Department dept;
 
+    public Post() {
+    }
+
+    public Post(String postId) {
+        this.postId = postId;
+    }
+
     public String getPostId() {
         return postId;
     }

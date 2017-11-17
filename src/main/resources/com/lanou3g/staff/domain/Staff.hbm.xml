@@ -16,7 +16,6 @@
         <many-to-one name="post"
                      class="com.lanou3g.post.domain.Post"
                      column="POST_ID"
-                     cascade="save-update"
                      lazy="false"/>
     </class>
 </hibernate-mapping>

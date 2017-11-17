@@ -12,9 +12,9 @@
         <many-to-one name="dept"
                      class="com.lanou3g.department.domain.Department"
                      column="DEPT_ID"
-                     cascade="save-update"/>
+                     />
 
-        <set name="staffs" table="T_STAFF" cascade="save-update" inverse="true">
+        <set name="staffs" table="T_STAFF" inverse="true">
             <key column="POST_ID"></key>
             <one-to-many class="com.lanou3g.staff.domain.Staff"/>
         </set>

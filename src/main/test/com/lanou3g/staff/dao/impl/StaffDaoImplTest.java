@@ -14,7 +14,7 @@ import java.util.List;
  * Created by dllo on 17/11/9.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config.xml")
+@ContextConfiguration("classpath:spring/spring-config.xml")
 public class StaffDaoImplTest {
 
     @Resource
@@ -31,5 +31,9 @@ public class StaffDaoImplTest {
         System.out.println(all);
     }
 
+//    @Test
+//    public void test1(){
+//        System.out.println(staffDao.getPostByDeptId("2c90907e5fb344fc015fb3456f5f0000"));
+//    }
 
 }

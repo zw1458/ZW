@@ -62,6 +62,10 @@ public class BaseAction<T,S> extends ActionSupport implements ModelDriven<T> {
     }
 
 
+    public void applicationPut(String key,Object value){
+        ActionContext.getContext().getApplication().put(key, value);
+    }
+
 
     public HttpServletRequest getRequest(){
         return ServletActionContext.getRequest();

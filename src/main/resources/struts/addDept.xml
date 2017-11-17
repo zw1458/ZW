@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+        <struts>
+        <package name="dept" extends="base" namespace="/dept">
+
+
+                <action name="findDept" class="deptAction" method="findDept">
+                        <result name="success">/pages/department/listDepartment.jsp</result>
+                </action>
+
+                <action name="addDept" class="deptAction" method="editDept">
+                        <result name="success" type="chain">findDept</result>
+                </action>
+
+                <action name="editDept1" class="deptAction" method="editDept">
+                        <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+                </action>
+
+                <action name="editDept" class="deptAction">
+                        <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+                </action>
+
+
+
+        </package>
+</struts>

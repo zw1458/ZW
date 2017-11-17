@@ -3,7 +3,12 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
         "http://struts.apache.org/dtds/struts-2.5.dtd">
         <struts>
-        <package name="login" extends="json-default" namespace="/staff">
+
+
+
+        <package name="login" extends="base" namespace="/staff">
+
+
 
                 <action name="staffAction_login" class="staffAction" method="login">
                         <result name="success">/pages/frame.jsp</result>
@@ -13,12 +18,10 @@
 
                 <action name="findStaff" class="staffAction" method="findStaff">
                         <result name="success">/pages/staff/listStaff.jsp</result>
-                        <result name="input">/pages/error.jsp</result>
                 </action>
 
                 <action name="addStaff" class="staffAction" method="addStaff">
                         <result name="success" type="redirectAction">findStaff</result>
-                        <result name="input">/pages/error.jsp</result>
                 </action>
 
                 <action name="findDept" class="staffAction" method="findAllDept">
@@ -30,44 +33,20 @@
                                 <param name="root">queryStaffPost</param>
                                 <param name="includeProperties">\[\d\]\.postId,\[\d\]\.postName</param>
                         </result>
-                        <result name="input">/pages/error.jsp</result>
                 </action>
 
 
                 <action name="editStaff" class="staffAction" method="editStaff">
                         <result name="success">/pages/staff/editStaff.jsp</result>
-                        <result name="input">/pages/error.jsp</result>
                 </action>
 
 
                 <action name="editStaff2" class="staffAction" method="addStaff">
                         <result name="success" type="redirectAction">findStaff</result>
-                        <result name="input">/pages/error.jsp</result>
                 </action>
 
-
-                <!--<action name="editS" class="staffAction">-->
-                        <!--<result name="success">/pages/staff/editStaff.jsp</result>-->
-                        <!--<result name="input">/pages/error.jsp</result>-->
-                <!--</action>-->
-
-
-                <action name="findStaffByDeptIdandPostId"
-                        class="staffAction"
-                        method="findStaffByDeptIdandPostId">
-                        <result name="success" type="redirectAction">findStaff</result>
-                        <result name="input">/pages/error.jsp</result>
-                </action>
-
-                <action name="staffsJson"
-                        class="staffAction"
-                        method="findStaffByDeptIdandPostId">
-                        <result name="success" type="json">
-                                <param name="root">findStaffByDeptIdAndPostIdList</param>
-                                <param name="excludeProperties">\[\d\]\.dept\.posts,\[\d\]\.dept\.staffs,
-                                        \[\d\]\.post\.staffs,\[\d\]\.post\.dept
-                                </param>
-                        </result>
+                <action name="findAllPage" class="staffAction" method="findAllPage">
+                        <result name="success">/pages/staff/listStaff.jsp</result>
                 </action>
 
         </package>

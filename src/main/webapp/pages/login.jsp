@@ -48,6 +48,7 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 					<br/>
 					<br/>
 					<br/>
+
 					用户名：<input type="text" name="loginName" class="msg" /><br/><br/>
 					<font color="#ff0000">
 						<s:fielderror fieldName="loginName" theme="simple"/>

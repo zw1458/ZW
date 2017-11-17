@@ -2,6 +2,7 @@ package com.lanou3g.department.domain;
 
 import com.lanou3g.post.domain.Post;
 
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +12,18 @@ import java.util.Set;
 public class Department {
     private String deptId,deptName;
     private Set<Post> posts = new HashSet<>();
+
+    public Department(String deptId, String deptName) {
+        this.deptId = deptId;
+        this.deptName = deptName;
+    }
+
+    public Department() {
+    }
+
+    public Department(String deptId) {
+        this.deptId = deptId;
+    }
 
     public String getDeptId() {
         return deptId;

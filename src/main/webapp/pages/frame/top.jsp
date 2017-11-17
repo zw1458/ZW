@@ -96,7 +96,7 @@
 								<tr>
 									<td width="51" valign="middle">
 										<font color="#FFFFFF">
-											欢迎您： Denny 	
+											欢迎您： ${sessionScope.get("login")}
 										</font>
 									</td>
 								</tr>

@@ -1,11 +1,15 @@
 package com.lanou3g.staff.service.impl;
 
+import com.lanou3g.page.domain.Page;
+import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.dao.StaffDao;
 import com.lanou3g.staff.domain.Staff;
 import com.lanou3g.staff.service.StaffService;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +21,9 @@ public class StaffServiceImpl implements StaffService {
 
 
     @Override
-    public void login(Staff staff) {
+    public Staff login(Staff staff) {
 
-        staffDao.save(staff);
+        return staffDao.findStaffByLoginNameAndLoginPwd(staff);
     }
 
     @Override
@@ -28,11 +32,6 @@ public class StaffServiceImpl implements StaffService {
         return true;
     }
 
-    @Override
-    public boolean delete(Staff staff) {
-        staffDao.delete(staff);
-        return true;
-    }
 
     @Override
     public List<Staff> findAll() {
@@ -40,34 +39,47 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Staff findById(Serializable id) {
-        return null;
+    public List<Post> getPostByDeptId(String deptId) {
+        return staffDao.getPostByDeptId(deptId);
     }
 
     @Override
-    public boolean update(Staff staff) {
-        return true;
+    public Staff findAllByStaffId(int staffId) {
+        return staffDao.findAllByStaffId(staffId);
     }
 
     @Override
-    public boolean saveOrUpdate(Staff staff) {
-        return true;
+    public List<Staff> getStaffByPostId(String postId) {
+        return staffDao.getStaffByPostId(postId);
+    }
+
+
+    @Override
+    public List<Staff> getStaffByDeptId(String deptId) {
+        return staffDao.getStaffByDeptId(deptId);
     }
 
     @Override
-    public List<Staff> findAll(String condition, Object... params) {
-        return null;
+    public List<Staff> getStaffByStaffName(String staffName) {
+        return staffDao.getStaffByStaffName(staffName);
     }
 
+    /**
+     *
+     * @param staff
+     * @param pageNum     当前的页
+     * @param pageSize    每页显示的条目数
+     * @return
+     */
     @Override
-    public int getTotalrecord(String condition, Object[] params) {
-        return 0;
+    public Page<Staff> findAllPage(Staff staff, int pageNum, int pageSize) {
+
+        int totalRecord = staffDao.getTotalRecord();
+        Page<Staff> page = new Page<Staff>(pageNum,pageSize,totalRecord);
+        List<Staff> data = staffDao.findAllPage(page.getStartIndex(),page.getPageSize());
+        page.setData(data);
+        return page;
     }
-
-
-
-
-
 
 
     public StaffDao getStaffDao() {

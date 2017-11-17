@@ -1,11 +1,16 @@
 package com.lanou3g.staff.action;
 
 import com.lanou3g.base.BaseAction;
+import com.lanou3g.department.domain.Department;
+import com.lanou3g.department.service.DepartmentService;
+import com.lanou3g.page.domain.Page;
+import com.lanou3g.post.domain.Post;
+import com.lanou3g.post.service.PostService;
 import com.lanou3g.staff.domain.Staff;
 import com.lanou3g.staff.service.StaffService;
 import com.lanou3g.staff.service.impl.StaffServiceImpl;
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
+import com.lanou3g.util.CrmStringUtils;
+import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
@@ -19,18 +24,44 @@ import java.util.List;
  */
 @Controller("staffAction")
 @Scope("prototype")
-public class StaffAction extends BaseAction<Staff, StaffServiceImpl> {
+public class StaffAction extends BaseAction<Staff, StaffService> {
 
-    private String loginName, loginPwd;
     @Resource
     private StaffService staffService;
+    @Resource
+    private DepartmentService departmentService;
+    @Resource
+    private PostService postService;
+
+
+    private String loginName, loginPwd;
     private Staff staff = getModel();
+    private Post post;
+    private Department department;
+    private int staffId;
+    private String deptId;
+    private String postId;
+    private Staff staffIdList;
+
+
+
     private List<Staff> allList;
-    private String staffId;
+    private List<Department> departmentList;
+    private List<Post> queryStaffPost;
+    private List<Staff> staffByDeptIdList;
 
 
+
+
+
+    //为了分页!
+    private int pageNum = 1,pageSize = 3;
+    private Page<Staff> allPage;
+
+
+    //登录的方法
     public String login() {
-//        sessionPut(LOGIN_KEY,);
+        staff.setLoginPwd(CrmStringUtils.getMD5Value(staff.getLoginPwd()));
         Staff staff1 = staffService.login(staff);
         if (staff1 != null) {
             sessionPut("login", staff.getLoginName());
@@ -38,38 +69,87 @@ public class StaffAction extends BaseAction<Staff, StaffServiceImpl> {
         }
         addFieldError("msg","请输入正确的用户名和密码");
         return INPUT;
-
     }
 
 
+    //添加和修改的方法
+    @SkipValidation
     public String addStaff() {
-        boolean saveList = staffService.save(staff);
+        staff.setPost(new Post(postId));
+
+        staff.setLoginPwd(CrmStringUtils.getMD5Value(staff.getLoginPwd()));
+        staffService.save(staff);
         List<Staff> all = staffService.findAll();
         applicationPut("allList",all);
         return SUCCESS;
     }
 
+    //查询所有的员工(条件查询)
     @SkipValidation
     public String findStaff(){
-        allList = staffService.findAll();
-        applicationPut("allList",allList);
+        departmentList = departmentService.findAll();
+        if (!StringUtils.isBlank(staff.getStaffName())){
+            allList = staffService.getStaffByStaffName(staff.getStaffName());
+        }else if (!StringUtils.isBlank(postId)&&!postId.equals("-1")){
+            allList = staffService.getStaffByPostId(postId);
+        }else if (!StringUtils.isBlank(deptId)&&!deptId.equals("-1")){
+            postId = null;
+            allList = staffService.getStaffByDeptId(deptId);
+        }else {
+            deptId = null;
+            postId = null;
+            allList = staffService.findAll();
+        }
+            return SUCCESS;
+    }
+
+
+    //查询所有的部门
+    @SkipValidation
+    public String findAllDept(){
+        departmentList = departmentService.findAll();
+        return SUCCESS;
+    }
+
+    //查询所有的职位(通过部门的ID)
+    @SkipValidation
+    public String findAllPost(){
+        queryStaffPost = postService.findPostByDeptId(deptId);
+        return SUCCESS;
+    }
+
+    //通过员工的ID找到单个员工,进行编辑
+    @SkipValidation
+    public String editStaff(){
+        departmentList = departmentService.findAll();
+        staffIdList = staffService.findAllByStaffId(staff.getStaffId());
         return SUCCESS;
     }
 
 
+    // 为了分页的方法!!!!!!
 
-    public String saveOrUpdate(){
-        List<Staff> list = staffService.findAll();
-        staffService.saveOrUpdate(staff);
-        applicationPut("allList",list);
-        return SUCCESS;
-
+    @SkipValidation
+    public String findAllPage(){
+        allPage = staffService.findAllPage(staff,pageNum,pageSize);
+        System.out.println(allPage);
+        ActionContext.getContext().put("page", allPage);
+        return "findAllPage";
     }
 
 
 
 
 
+
+
+
+
+
+
+    /*
+      以下全是弱智
+     */
 
 
     public Staff getStaff() {
@@ -105,11 +185,99 @@ public class StaffAction extends BaseAction<Staff, StaffServiceImpl> {
         this.allList = allList;
     }
 
-    public void setStaffId(String staffId) {
+    public int getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(int staffId) {
         this.staffId = staffId;
     }
 
-    public String getStaffId() {
-        return staffId;
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public List<Department> getDepartmentList() {
+        return departmentList;
+    }
+
+    public void setDepartmentList(List<Department> departmentList) {
+        this.departmentList = departmentList;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
+    public List<Post> getQueryStaffPost() {
+        return queryStaffPost;
+    }
+
+    public void setQueryStaffPost(List<Post> queryStaffPost) {
+        this.queryStaffPost = queryStaffPost;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
+    public Staff getStaffIdList() {
+        return staffIdList;
+    }
+
+    public void setStaffIdList(Staff staffIdList) {
+        this.staffIdList = staffIdList;
+    }
+
+    public List<Staff> getStaffByDeptIdList() {
+        return staffByDeptIdList;
+    }
+
+    public void setStaffByDeptIdList(List<Staff> staffByDeptIdList) {
+        this.staffByDeptIdList = staffByDeptIdList;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Page<Staff> getAllPage() {
+        return allPage;
+    }
+
+    public void setAllPage(Page<Staff> allPage) {
+        this.allPage = allPage;
     }
 }

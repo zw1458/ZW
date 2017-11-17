@@ -18,8 +18,6 @@ import java.util.List;
 @Controller("postAction")
 @Scope("prototype")
 public class PostAction extends BaseAction<Post,PostServiceImpl> {
-
-    private Post post = getModel();
     @Resource
     private PostService postService;
     @Resource
@@ -28,15 +26,14 @@ public class PostAction extends BaseAction<Post,PostServiceImpl> {
     private List<Department> departmentList;
 
 
-    private String deptId;
 
     public String save(){
-        postService.save(post);
+        postService.save(getModel());
         return SUCCESS;
     }
 
     public String findAllPost(){
-        allPost = postService.findAllPost(post);
+        allPost = postService.findAllPost(getModel());
         return SUCCESS;
     }
 
@@ -47,20 +44,12 @@ public class PostAction extends BaseAction<Post,PostServiceImpl> {
 
 
    public String edit(){
-       post.setDept(new Department(deptId));
-       postService.edit(post);
+       postService.edit(getModel());
        return SUCCESS;
    }
 
 
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
 
     public List<Post> getAllPost() {
         return allPost;
@@ -82,11 +71,6 @@ public class PostAction extends BaseAction<Post,PostServiceImpl> {
         this.departmentList = departmentList;
     }
 
-    public String getDeptId() {
-        return deptId;
-    }
 
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
+
 }

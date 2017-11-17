@@ -1,41 +1,70 @@
 package com.lanou3g.staff.dao;
 
-import com.lanou3g.base.BaseDao;
+import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.domain.Staff;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by dllo on 17/11/9.
  */
 
-public interface StaffDao extends BaseDao<Staff> {
+public interface StaffDao{
 
-
-    @Override
     boolean save(Staff staff);
 
-    @Override
-    boolean delete(Staff staff);
+    Staff findStaffByLoginNameAndLoginPwd(Staff staff);
 
-    @Override
+    boolean saveOrUpdate(Staff staff);//没有用
+
+
+    List<Post> getPostByDeptId(String deptId);
+
+    Staff findAllByStaffId(int staffId);
+
+
+
     List<Staff> findAll();
 
-    @Override
-    Staff findById(Serializable id);
 
-    @Override
-    boolean update(Staff staff);
 
-    @Override
-    boolean saveOrUpdate(Staff staff);
 
-    @Override
-    List<Staff> findAll(String condition, Object... params);
 
-    @Override
-    int getTotalrecord(String condition, Object[] params);
+
+    /*
+       为了查询
+     */
+    List<Staff> getStaffByPostId(String postId);
+
+
+    List<Staff> getStaffByDeptId(String deptId);
+
+
+    List<Staff> getStaffByStaffName(String staffName);
+
+
+
+
+
+    /*
+       为了分页
+     */
+
+
+    /**
+     * 获取到的数据
+     * @return
+     */
+    int getTotalRecord();
+
+    /**
+     *  获取到数据 -- 带分页的参数的
+     * @param startIndex    开始索引
+     * @param pageSize      每页显示的记录数
+     * @return
+     */
+    List<Staff> findAllPage(
+                       int startIndex,
+                       int pageSize);
+
 }

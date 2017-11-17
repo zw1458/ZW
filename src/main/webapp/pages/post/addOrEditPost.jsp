@@ -37,19 +37,33 @@
 
 <form action="/post/addPost.action" method="post">
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
-	 <tr>
+         <tr>
          <td>选择部门：</td>
          <td>
-             <select name="deptId">
+             <select name="dept.deptId">
                  <option value="-1">----请--选--择----</option>
-                 <s:iterator value="departmentList" var="dept">
-                     <option value="${dept.deptId}">${dept.deptName}</option>
+                 <s:iterator value="departmentList" var="deptm">
+
+                     <s:if test="#deptm.deptId==post.dept.deptId">
+                         <option value="${deptm.deptId}" selected="selected">${deptm.deptName}</option>
+                     </s:if>
+                     <s:else>
+                         <option value="${deptm.deptId}">${deptm.deptName}</option>
+                     </s:else>
                  </s:iterator>
              </select>
          </td>
+             <%
+                 if (request.getParameter("postName") != null){
+                     String newDep = request.getParameter("postName");
+                     String newDepName = new String(newDep.getBytes("iso-8859-1"),"utf-8");
+                     request.setAttribute("editPostNameJsp",newDepName);
+                 }
+             %>
          <td>职务：</td>
-         <td><input type="text" name="postName"/></td>
-	  </tr>
+         <td><input type="text" name="postName" value="${editPostNameJsp}"/></td>
+         <input type="hidden" name="postId" value="${postId}">
+         </tr>
 	</table>
 </form>
 

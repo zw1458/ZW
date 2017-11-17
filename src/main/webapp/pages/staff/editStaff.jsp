@@ -1,4 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -88,8 +89,19 @@
             <td><input type="text" name="staffName" value="${staffIdList.staffName}"/></td>
             <td>性别：</td>
             <td>
-                <input type="radio" name="gender" checked="checked" value="男"/>男
-                <input type="radio" name="gender" value="女" value="女"/>女
+                <%--<input type="radio" name="gender" checked="checked" value="男"/>男--%>
+                <%--<input type="radio" name="gender" value="女" value="女"/>女--%>
+                    <%--<input type="radio" name="staff.gender" value="1" checked="${staffIdList.gender=='男'?"'checked'":''}"/>男--%>
+                    <%--<input type="radio" name="staff.gender" value="1" checked="${staffIdList.gender=='女'?"'checked'":''}"/>女--%>
+                    <c:if test="${staffIdList.gender=='男'}">
+                        <input type="radio" name="gender" checked="checked" value="男"/>男
+                        <input type="radio" name="gender" value="女"/>女
+                    </c:if>
+
+                    <c:if test="${staffIdList.gender=='女'}">
+                        <input type="radio" name="gender" value="男"/>男
+                        <input type="radio" name="gender" checked="checked" value="女"/>女
+                    </c:if>
             </td>
         </tr>
         <tr>
@@ -102,7 +114,6 @@
                                     selected="selected">${staffIdList.post.dept.deptName}</option>
                         </s:if>
                         <s:else>
-
                             <option value="${deptm.deptId}">${deptm.deptName}</option>
                         </s:else>
                     </s:iterator>

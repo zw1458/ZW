@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+        <struts>
+        <package name="postt" extends="base" namespace="/post">
+
+                <action name="findPost" class="postAction" method="findAllPost">
+                        <result name="success">/pages/post/listPost.jsp</result>
+                </action>
+
+                <action name="addPost" class="postAction" method="edit">
+                        <result name="success" type="redirectAction">findPost</result>
+                </action>
+
+                <action name="findDept" class="postAction" method="findAllDept">
+                        <result name="success">/pages/post/addOrEditPost.jsp</result>
+                </action>
+
+
+                <action name="edit" class="postAction" method="edit">
+                        <result name="success">/pages/post/addOrEditPost.jsp</result>
+                </action>
+
+
+        </package>
+</struts>

@@ -6,21 +6,14 @@ import java.util.List;
  * Created by dllo on 17/11/9.
  */
 public interface BaseDao<T> {
-    /**
-     * 添加
-     * @param t
-     */
+
 
     boolean save(T t);
 
-    /**
-     * 更新
-     */
+
     boolean update(T t);
 
-    /**
-     * 删除
-     */
+
     boolean delete(T t);
 
     boolean saveOrUpdate(T t);
