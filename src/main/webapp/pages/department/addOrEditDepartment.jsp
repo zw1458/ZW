@@ -48,9 +48,6 @@
 	    <td>部门名称：</td>
 	    <td>
             <input type="text" name="deptName" value="${editPostNameJsp}"/>
-            <font color="#ff0000">
-                <s:fielderror fieldName="deptName" theme="simple"/>
-            </font>
 
             <input type="hidden" name="deptId" value="${deptId}"/>
         </td>
@@ -58,7 +55,9 @@
 	  </tr>
 	</table>
 </form>
-<%--<s:fielderror/>--%>
+<font color="#ff0000">
+    <s:fielderror/>
+</font>
 
 </body>
 </html>

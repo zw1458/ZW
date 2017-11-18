@@ -16,4 +16,7 @@ public interface DepartmentDao extends BaseDao<Department> {
 
     @Override
     List<Department> findAll();
+
+
+    List<Department> findDeptByDeptName(String deptName);
 }

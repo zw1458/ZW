@@ -31,6 +31,10 @@ public interface StaffDao{
 
 
 
+
+
+
+
     /*
        为了查询
      */
@@ -51,20 +55,5 @@ public interface StaffDao{
      */
 
 
-    /**
-     * 获取到的数据
-     * @return
-     */
-    int getTotalRecord();
-
-    /**
-     *  获取到数据 -- 带分页的参数的
-     * @param startIndex    开始索引
-     * @param pageSize      每页显示的记录数
-     * @return
-     */
-    List<Staff> findAllPage(
-                       int startIndex,
-                       int pageSize);
 
 }

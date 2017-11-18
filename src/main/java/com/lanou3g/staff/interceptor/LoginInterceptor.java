@@ -12,8 +12,8 @@ public class LoginInterceptor extends MethodFilterInterceptor {
     protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
         Object login = ServletActionContext.getContext().getSession().get("login");
         if (login==null){
-
-            return "input";
+            ServletActionContext.getContext().getSession().put("msg","请完成登录");
+            return "login";
         }
         return actionInvocation.invoke();
     }

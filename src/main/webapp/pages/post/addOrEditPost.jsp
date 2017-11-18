@@ -44,7 +44,7 @@
                  <option value="-1">----请--选--择----</option>
                  <s:iterator value="departmentList" var="deptm">
 
-                     <s:if test="#deptm.deptId==post.dept.deptId">
+                     <s:if test="#deptm.deptId==model.dept.deptId">
                          <option value="${deptm.deptId}" selected="selected">${deptm.deptName}</option>
                      </s:if>
                      <s:else>

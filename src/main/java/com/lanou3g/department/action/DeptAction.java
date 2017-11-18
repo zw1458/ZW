@@ -4,6 +4,8 @@ import com.lanou3g.base.BaseAction;
 import com.lanou3g.department.domain.Department;
 import com.lanou3g.department.service.DepartmentService;
 import com.lanou3g.department.service.impl.DepartmentServiceImpl;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -27,15 +29,31 @@ public class DeptAction extends BaseAction<Department, DepartmentService> {
 
 
 
+
     public String findDept() {
         deptList = departmentService.findAll();
         return SUCCESS;
     }
 
     public String editDept() {
-        departmentService.save(department);
+        if (departmentService.save(department)){
+            return SUCCESS;
+        }
+//        departmentService.save(department);
+        addFieldError("msg","部门名已存在");
+        return ERROR;
+    }
+
+
+    public String validateEditDept(){
+        if (StringUtils.isBlank(department.getDeptName())){
+            addFieldError("error","请输入正确的名称");
+        }
         return SUCCESS;
     }
+
+
+
 
 
     public String getDeptName() {

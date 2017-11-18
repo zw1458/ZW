@@ -32,9 +32,7 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
     @Override
     public Staff findStaffByLoginNameAndLoginPwd(Staff staff) {
         String hql = "from Staff T_STAFF where loginName = ? and loginPwd = ?";
-//        Object[] value = {staff.getLoginName(),staff.getLoginPwd()};
-//        Staff staff1 = getHibernateTemplate().get(Staff.class, value);
-//        return staff1;
+
         List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql,staff.getLoginName(),staff.getLoginPwd());
         if (list.size() == 0){
             return null;
@@ -80,31 +78,7 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
 
     }
 
-    /**
-     * 获取到的数据
-     * @return
-     */
-    @Override
-    public int getTotalRecord() {
-        String hql = "select count(c) from Staff c where 1=1" ;
-        List<Long> find = (List<Long>) getHibernateTemplate().find(hql);
-        if (find!=null){
-            return find.get(0).intValue();
-        }
-        return 0;
-    }
 
-    /**
-     * 获取到数据 -- 带分页的参数的
-     * @param startIndex    开始索引
-     * @param pageSize      每页显示的记录数
-     * @return
-     */
-    @Override
-    public List<Staff> findAllPage(int startIndex, int pageSize) {
-        String hql = "from Staff where 1=1";
-        return getHibernateTemplate().execute(new PageHibernateCallback<Staff>(hql,startIndex,pageSize));
-    }
 
 
 
@@ -122,6 +96,8 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
         List<Staff> list = (List<Staff>) getHibernateTemplate().find(sql);
         return list;
     }
+
+
 
 
 }

@@ -12,10 +12,14 @@
 
                 <action name="addDept" class="deptAction" method="editDept">
                         <result name="success" type="chain">findDept</result>
+                        <result name="input">/pages/department/addOrEditDepartment.jsp</result>
+                        <result name="error">/pages/department/addOrEditDepartment.jsp</result>
+
                 </action>
 
                 <action name="editDept1" class="deptAction" method="editDept">
-                        <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+                        <result name="success" type="redirectAction">findDept</result>
+                        <result name="error">/pages/department/addOrEditDepartment.jsp</result>
                 </action>
 
                 <action name="editDept" class="deptAction">

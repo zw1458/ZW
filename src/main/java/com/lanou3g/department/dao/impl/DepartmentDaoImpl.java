@@ -32,6 +32,7 @@ public class DepartmentDaoImpl extends HibernateDaoSupport implements Department
     }
 
 
+
     @Override
     public boolean saveOrUpdate(Department department) {
         if (department.getDeptId().isEmpty()) {
@@ -44,14 +45,25 @@ public class DepartmentDaoImpl extends HibernateDaoSupport implements Department
 
 
     @Override
+    public List<Department> findDeptByDeptName(String deptName) {
+        String hql = "from Department T_DEPT where deptName = ?";
+        List<Department> list = (List<Department>) getHibernateTemplate().find(hql, deptName);
+        return list;
+    }
+
+
+
+
+
+
+
+
+
+    @Override
     public boolean update(Department department) {
         return false;
     }
 
-    @Override
-    public boolean delete(Department department) {
-        return false;
-    }
 
 
     @Override
@@ -60,13 +72,5 @@ public class DepartmentDaoImpl extends HibernateDaoSupport implements Department
     }
 
 
-    @Override
-    public List<Department> findAll(String condition, Object... params) {
-        return null;
-    }
 
-    @Override
-    public int getTotalrecord(String condition, Object[] params) {
-        return 0;
-    }
 }

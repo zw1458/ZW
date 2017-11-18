@@ -46,9 +46,12 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 						欢迎使用CRM系统
 					</font> 
 					<br/>
-					<br/>
-					<br/>
 
+					<font size="3" color="#ff0000">
+						<s:property value="#session.msg"/>
+					</font>
+					<br/>
+					<br/>
 					用户名：<input type="text" name="loginName" class="msg" /><br/><br/>
 					<font color="#ff0000">
 						<s:fielderror fieldName="loginName" theme="simple"/>

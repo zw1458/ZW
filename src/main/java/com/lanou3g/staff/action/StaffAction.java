@@ -3,15 +3,13 @@ package com.lanou3g.staff.action;
 import com.lanou3g.base.BaseAction;
 import com.lanou3g.department.domain.Department;
 import com.lanou3g.department.service.DepartmentService;
-import com.lanou3g.page.domain.Page;
+import com.lanou3g.page.domain.PageBean;
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.post.service.PostService;
 import com.lanou3g.staff.domain.Staff;
 import com.lanou3g.staff.service.StaffService;
-import com.lanou3g.staff.service.impl.StaffServiceImpl;
 import com.lanou3g.util.CrmStringUtils;
 import com.opensymphony.xwork2.ActionContext;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -36,8 +34,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
 
     private String loginName, loginPwd;
     private Staff staff = getModel();
-    private Post post;
-    private Department department;
+
     private int staffId;
     private String deptId;
     private String postId;
@@ -55,8 +52,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
 
 
     //为了分页!
-    private int pageNum = 1,pageSize = 3;
-    private Page<Staff> allPage;
+
 
 
     //登录的方法
@@ -84,23 +80,13 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         return SUCCESS;
     }
 
+
     //查询所有的员工(条件查询)
     @SkipValidation
     public String findStaff(){
         departmentList = departmentService.findAll();
-        if (!StringUtils.isBlank(staff.getStaffName())){
-            allList = staffService.getStaffByStaffName(staff.getStaffName());
-        }else if (!StringUtils.isBlank(postId)&&!postId.equals("-1")){
-            allList = staffService.getStaffByPostId(postId);
-        }else if (!StringUtils.isBlank(deptId)&&!deptId.equals("-1")){
-            postId = null;
-            allList = staffService.getStaffByDeptId(deptId);
-        }else {
-            deptId = null;
-            postId = null;
-            allList = staffService.findAll();
-        }
-            return SUCCESS;
+        allList = staffService.queryForAll(staff.getStaffName(),postId,deptId);
+        return SUCCESS;
     }
 
 
@@ -129,13 +115,8 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
 
     // 为了分页的方法!!!!!!
 
-    @SkipValidation
-    public String findAllPage(){
-        allPage = staffService.findAllPage(staff,pageNum,pageSize);
-        System.out.println(allPage);
-        ActionContext.getContext().put("page", allPage);
-        return "findAllPage";
-    }
+
+
 
 
 
@@ -193,13 +174,6 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         this.staffId = staffId;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
 
     public List<Department> getDepartmentList() {
         return departmentList;
@@ -209,13 +183,6 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         this.departmentList = departmentList;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
 
     public String getDeptId() {
         return deptId;
@@ -257,27 +224,5 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         this.staffByDeptIdList = staffByDeptIdList;
     }
 
-    public int getPageNum() {
-        return pageNum;
-    }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public Page<Staff> getAllPage() {
-        return allPage;
-    }
-
-    public void setAllPage(Page<Staff> allPage) {
-        this.allPage = allPage;
-    }
 }
