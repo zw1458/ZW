@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by dllo on 17/11/17.
  */
-public class PageBean {
+public class Page {
 
     private boolean hasPrePage;
 
@@ -42,21 +42,21 @@ public class PageBean {
     }
 
     /** The default constructor */
-    public PageBean(){
+    public Page(){
 
     }
 
     /** construct the page by everyPage
      * @param everyPage
      * */
-    public PageBean(int everyPage){
+    public Page(int everyPage){
         this.everyPage = everyPage;
     }
 
     /** The whole constructor */
-    public PageBean(boolean hasPrePage, boolean hasNextPage,
-                    int everyPage, int totalPage,
-                    int currentPage, int beginIndex, int totalCount) {
+    public Page(boolean hasPrePage, boolean hasNextPage,
+                int everyPage, int totalPage,
+                int currentPage, int beginIndex, int totalCount) {
         this.hasPrePage = hasPrePage;
         this.hasNextPage = hasNextPage;
         this.everyPage = everyPage;

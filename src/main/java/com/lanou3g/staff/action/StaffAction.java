@@ -3,13 +3,11 @@ package com.lanou3g.staff.action;
 import com.lanou3g.base.BaseAction;
 import com.lanou3g.department.domain.Department;
 import com.lanou3g.department.service.DepartmentService;
-import com.lanou3g.page.domain.PageBean;
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.post.service.PostService;
 import com.lanou3g.staff.domain.Staff;
 import com.lanou3g.staff.service.StaffService;
 import com.lanou3g.util.CrmStringUtils;
-import com.opensymphony.xwork2.ActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -46,9 +44,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
     private List<Department> departmentList;
     private List<Post> queryStaffPost;
     private List<Staff> staffByDeptIdList;
-
-
-
+    private List<Staff> staffServiceAll;
 
 
     //为了分页!
@@ -85,7 +81,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
     @SkipValidation
     public String findStaff(){
         departmentList = departmentService.findAll();
-        allList = staffService.queryForAll(staff.getStaffName(),postId,deptId);
+        allList = staffService.findAll();
         return SUCCESS;
     }
 
@@ -111,6 +107,20 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         staffIdList = staffService.findAllByStaffId(staff.getStaffId());
         return SUCCESS;
     }
+
+
+
+
+
+    @SkipValidation
+    public String getResult(){
+        staffServiceAll = staffService.queryForAll(staff);
+        return SUCCESS;
+    }
+
+
+
+
 
 
     // 为了分页的方法!!!!!!
@@ -224,5 +234,11 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         this.staffByDeptIdList = staffByDeptIdList;
     }
 
+    public List<Staff> getStaffServiceAll() {
+        return staffServiceAll;
+    }
 
+    public void setStaffServiceAll(List<Staff> staffServiceAll) {
+        this.staffServiceAll = staffServiceAll;
+    }
 }

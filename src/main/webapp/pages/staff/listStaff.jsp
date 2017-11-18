@@ -11,6 +11,84 @@
 
     <script>
 
+
+        function condition() {
+
+            var deptId = document.getElementById("dept").value;
+            var postId = document.getElementById("post").value;
+            var staffName = document.getElementById("staffName").value;
+            var data = new FormData();
+
+            data.append("staff.post.dept.deptId", deptId);
+            data.append("staff.post.postId", postId);
+            data.append("staffName", staffName);
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+                    json = eval('(' + this.responseText + ')');
+                    var tableEle = document.getElementById("staffId");
+                    var length = tableEle.rows.length
+                    for (var j = 0; j < length - 1; j++) {
+                        tableEle.deleteRow(1);
+                    }
+
+                    for (var j = 0; j < json.length; j++) {
+                        var tr = document.createElement("tr");
+                        getId = json[j].staffId;
+
+                        tr.appendChild(createTD(json[j].staffName));
+                        tr.appendChild(createTD(json[j].gender));
+                        tr.appendChild(createTD(json[j].onDutyDate));
+                        tr.appendChild(createTD(json[j].post.dept.deptName));
+                        tr.appendChild(createTD(json[j].post.postName));
+
+                        function createA() {
+                            var get_Id = json[j].staffId;
+                            var path = "${pageContext.request.contextPath}/staff/editStaff?staffId=";
+                            path += get_Id;
+
+                            var td = document.createElement("td");
+                            td.setAttribute("align", "center");
+                            var a = document.createElement("a");
+                            a.setAttribute("href", path);
+                            var textNode = document.createElement("img");
+                            textNode.setAttribute("src", "${pageContext.request.contextPath}/images/button/modify.gif")
+                            textNode.setAttribute("class", "img");
+                            a.appendChild(textNode);
+                            td.appendChild(a);
+                            return td;
+                        }
+
+
+                        tr.append(createA());
+                        tableEle.appendChild(tr)
+                    }
+
+
+                    function createTD(text) {
+                        var td = document.createElement("td");
+                        td.setAttribute("align", "center")
+                        var textNode = document.createTextNode(text);
+                        td.appendChild(textNode);
+                        return td;
+                    }
+
+
+                }
+
+
+            });
+
+            xhr.open("POST", "http://localhost:8080/staff/staffsJson.action");
+
+            xhr.send(data);
+
+        }
+
         <%--当选择部门的时候会执行--%>
         function changePost(value) {
             var data = new FormData();
@@ -77,7 +155,7 @@
 
         <td width="57%" align="right">
             <%--高级查询 --%>
-            <a href="javascript:void(0)" onclick="onStaffsQuery()">
+            <a href="javascript:void(0)" onclick="condition()">
                 <img src="${pageContext.request.contextPath}/images/button/gaojichaxun.gif"/>
             </a>
 
@@ -116,7 +194,7 @@
 
             </td>
             <td width="80px">姓名：</td>
-            <td width="200px"><input type="text" name="staffName" size="12"/></td>
+            <td width="200px"><input type="text" name="staffName" id = "staffName" size="12"/></td>
             <td></td>
         </tr>
     </table>
@@ -129,7 +207,7 @@
     </tr>
 </table>
 
-<table width="100%" border="1" id="staff">
+<table width="100%" border="1" id="staffId">
     <tr class="henglan" style="font-weight:bold;">
         <td width="10%" align="center">员工姓名</td>
         <td width="6%"  align="center">性别</td>
@@ -171,48 +249,48 @@
 
 
 
-<table border="0" cellspacing="0" cellpadding="0" align="center">
-    <tr>
-        <td align="right">
+<%--<table border="0" cellspacing="0" cellpadding="0" align="center">--%>
+    <%--<tr>--%>
+        <%--<td align="right">--%>
 
-            第<s:property value="%{#page.pageNum}"/>页/共<s:property
-                value="#pageBean.totalPage"/>页</span>
-            <s:a action="findAllPage">
-                首页
-                <s:param name="pageNum" value="'1'"/>
-            </s:a>
-            <s:if test="%{#page.pageNum > 1}">
-                <s:a action="findAllPage">
-                    上一页
-                    <s:param name="pageNum" value="%{#page.pageNum - 1}"/>
-                </s:a>
-            </s:if>
-            <s:iterator var="i" begin="%{#page.start}" end="%{#page.end}">
-                <s:if test="%{#i eq #page.pageNum}">
-                    <font color="red">
-                        <s:property value="%{#i}"/>
-                    </font>
-                </s:if>
-                <s:else>
-                    <s:a action="findAllPage">
-                        [<s:property value="%{#i}"/>]
-                        <s:param name="pageNum" value="%{#i}"/>
-                    </s:a>
-                </s:else>
-            </s:iterator>
-            <s:if test="%{#page.pageNum < #page.totalPage}">
-                <s:a action="findAllPage">
-                    <s:param name="pageNum" value="%{#page.pageNum + 1}"/>
-                    下一页
-                </s:a>
-            </s:if>
-            <s:a action="findAllPage">
-                <s:param name="pageNum" value="%{#page.totalPage}"/>
-                尾页
-            </s:a>
-        </td>
-    </tr>
-</table>
+            <%--第<s:property value="%{#page.pageNum}"/>页/共<s:property--%>
+                <%--value="#pageBean.totalPage"/>页</span>--%>
+            <%--<s:a action="findAllPage">--%>
+                <%--首页--%>
+                <%--<s:param name="pageNum" value="'1'"/>--%>
+            <%--</s:a>--%>
+            <%--<s:if test="%{#page.pageNum > 1}">--%>
+                <%--<s:a action="findAllPage">--%>
+                    <%--上一页--%>
+                    <%--<s:param name="pageNum" value="%{#page.pageNum - 1}"/>--%>
+                <%--</s:a>--%>
+            <%--</s:if>--%>
+            <%--<s:iterator var="i" begin="%{#page.start}" end="%{#page.end}">--%>
+                <%--<s:if test="%{#i eq #page.pageNum}">--%>
+                    <%--<font color="red">--%>
+                        <%--<s:property value="%{#i}"/>--%>
+                    <%--</font>--%>
+                <%--</s:if>--%>
+                <%--<s:else>--%>
+                    <%--<s:a action="findAllPage">--%>
+                        <%--[<s:property value="%{#i}"/>]--%>
+                        <%--<s:param name="pageNum" value="%{#i}"/>--%>
+                    <%--</s:a>--%>
+                <%--</s:else>--%>
+            <%--</s:iterator>--%>
+            <%--<s:if test="%{#page.pageNum < #page.totalPage}">--%>
+                <%--<s:a action="findAllPage">--%>
+                    <%--<s:param name="pageNum" value="%{#page.pageNum + 1}"/>--%>
+                    <%--下一页--%>
+                <%--</s:a>--%>
+            <%--</s:if>--%>
+            <%--<s:a action="findAllPage">--%>
+                <%--<s:param name="pageNum" value="%{#page.totalPage}"/>--%>
+                <%--尾页--%>
+            <%--</s:a>--%>
+        <%--</td>--%>
+    <%--</tr>--%>
+<%--</table>--%>
 
 
 

@@ -1,6 +1,5 @@
 package com.lanou3g.staff.service.impl;
 
-import com.lanou3g.page.domain.PageBean;
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.dao.StaffDao;
 import com.lanou3g.staff.domain.Staff;
@@ -36,6 +35,7 @@ public class StaffServiceImpl implements StaffService {
         return staffDao.findAll();
     }
 
+
     @Override
     public List<Post> getPostByDeptId(String deptId) {
         return staffDao.getPostByDeptId(deptId);
@@ -47,18 +47,18 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<Staff> queryForAll(String staffName,String postId,String deptId) {
-        if (!StringUtils.isBlank(staffName)){
-            return staffDao.getStaffByStaffName(staffName);
-        }else if (!StringUtils.isBlank(postId)&&!postId.equals("-1")){
-            return staffDao.getStaffByPostId(postId);
-        }else if (!StringUtils.isBlank(deptId)&&!deptId.equals("-1")){
+    public List<Staff> queryForAll(Staff staff) {
+        if (!StringUtils.isBlank(staff.getStaffName())){
+            return staffDao.getStaffByStaffName(staff.getStaffName());
+        }else if (!StringUtils.isBlank(staff.getPost().getPostId())&&!staff.getPost().getPostId().equals("-1")){
+            return staffDao.getStaffByPostId(staff.getPost().getPostId());
+        }else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId())&&!staff.getPost().getDept().getDeptId().equals("-1")){
 
-            postId = null;
-            return staffDao.getStaffByDeptId(deptId);
+            staff.getPost().setPostId(null);
+            return staffDao.getStaffByDeptId(staff.getPost().getDept().getDeptId());
         }else {
-            deptId = null;
-            postId = null;
+            staff.getPost().getDept().setDeptId(null);
+            staff.getPost().setPostId(null);
             return staffDao.findAll();
         }
 //        return null;

@@ -45,8 +45,17 @@
                         <result name="success" type="redirectAction">findStaff</result>
                 </action>
 
-                <action name="findAllPage" class="staffAction" method="findAllPage">
-                        <result name="success">/pages/staff/listStaff.jsp</result>
+
+
+                <action name="staffsJson"
+                        class="staffAction"
+                        method="getResult">
+                        <result name="success" type="json">
+                                <param name="root">staffServiceAll</param>
+                                <param name="excludeProperties">\[\d\]\.post\.staffs,
+                                        \[\d\]\.post\.dept\.posts
+                                </param>
+                        </result>
                 </action>
 
         </package>

@@ -31,10 +31,6 @@ public interface StaffDao{
 
 
 
-
-
-
-
     /*
        为了查询
      */

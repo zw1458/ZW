@@ -1,17 +1,11 @@
 package com.lanou3g.staff.dao.impl;
 
-import com.lanou3g.page.util.impl.PageHibernateCallback;
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.dao.StaffDao;
 import com.lanou3g.staff.domain.Staff;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Scope;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

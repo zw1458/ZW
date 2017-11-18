@@ -1,6 +1,5 @@
 package com.lanou3g.staff.service;
 
-import com.lanou3g.page.domain.PageBean;
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.domain.Staff;
 
@@ -19,6 +18,10 @@ public interface StaffService{
     List<Staff> findAll();
 
 
+
+
+
+
     List<Post> getPostByDeptId(String deptId);
 
     Staff findAllByStaffId(int staffId);
@@ -26,7 +29,7 @@ public interface StaffService{
 
     //为了高级查询
 
-    List<Staff> queryForAll(String staffName,String postId,String deptId);
+    List<Staff> queryForAll(Staff staff);
 
 
 
