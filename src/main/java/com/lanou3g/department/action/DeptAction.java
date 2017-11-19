@@ -24,19 +24,20 @@ public class DeptAction extends BaseAction<Department, DepartmentService> {
     @Resource
     private DepartmentService departmentService;
 
-    private Department department = getModel();
     private List<Department> deptList;
 
 
 
 
+    //查询所有的部门
     public String findDept() {
         deptList = departmentService.findAll();
         return SUCCESS;
     }
 
+    //添加和编辑的方法,只是名字取得有点垃圾
     public String editDept() {
-        if (departmentService.save(department)){
+        if (departmentService.save(getModel())){
             return SUCCESS;
         }
         addFieldError("msg","部门名已存在");
@@ -44,9 +45,10 @@ public class DeptAction extends BaseAction<Department, DepartmentService> {
     }
 
 
+    //为了验证!!(部门名不能为空的判断!!!!!!
     public String validateEditDept(){
-        if (StringUtils.isBlank(department.getDeptName())){
-            addFieldError("error","请输入正确的名称");
+        if (StringUtils.isBlank(getModel().getDeptName())){
+            addFieldError("error","部门名不能为空");
         }
         return SUCCESS;
     }
@@ -61,16 +63,6 @@ public class DeptAction extends BaseAction<Department, DepartmentService> {
 
     public void setDeptName(String deptName) {
         this.deptName = deptName;
-    }
-
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-
-        this.department = department;
     }
 
     public List<Department> getDeptList() {

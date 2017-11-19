@@ -6,7 +6,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <context:component-scan base-package="com.lanou3g"/>
 
     <bean id="postDao" class="com.lanou3g.post.dao.impl.PostDaoImpl">
 
@@ -18,21 +17,5 @@
         <property name="postDao" ref="postDao"/>
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
 
-    <tx:advice id="postAdvisor" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="*"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <aop:config>
-
-        <aop:pointcut id="postPointCut" expression="execution(* com.lanou3g.post.dao.impl.*.*(..))"/>
-
-        <aop:advisor advice-ref="postAdvisor" pointcut-ref="postPointCut"/>
-
-    </aop:config>
 </beans>

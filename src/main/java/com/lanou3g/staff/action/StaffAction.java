@@ -109,14 +109,14 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
     }
 
 
-    //按条件查询获取数据(为了解析
+    //按条件查询获取数据(为了解析!!!
     @SkipValidation
     public String getResult() {
         staffServiceAll = staffService.queryForAll(staff);
         return SUCCESS;
     }
 
-    //为了修改密码
+    //为了修改密码!!!
     @SkipValidation
     public String updatePwd() {
         if (reNewPassword.equals(newPassword)){
@@ -135,6 +135,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
 
 
 
+    //为了重新登录!!!
     @SkipValidation
     public String reLogin(){
         ActionContext.getContext().getSession().remove("login");

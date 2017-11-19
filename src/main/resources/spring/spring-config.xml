@@ -59,7 +59,7 @@
     <aop:config>
 
         <!--声明切点-->
-        <aop:pointcut id="userPointCut" expression="execution(* com.lanou3g.staff.dao.impl.*.*(..))"/>
+        <aop:pointcut id="userPointCut" expression="execution(* com.lanou3g.*.dao.impl.*.*(..))"/>
 
         <!--配置顾问(通知)-->
 

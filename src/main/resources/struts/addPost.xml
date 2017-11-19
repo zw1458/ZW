@@ -5,22 +5,32 @@
         <struts>
         <package name="postt" extends="base" namespace="/post">
 
-                <action name="findPost" class="postAction" method="findAllPost">
+                <default-class-ref class="postAction"/>
+
+
+
+                <!--这尼玛是跟部门一样的!!!!
+
+                    就是这次要把部门的信息传过来!!
+                -->
+
+
+                <action name="findPost" method="findAllPost">
                         <result name="success">/pages/post/listPost.jsp</result>
                 </action>
 
-                <action name="addPost" class="postAction" method="edit">
+                <action name="addPost" method="edit">
                         <result name="success" type="redirectAction">findPost</result>
                 </action>
 
-                <action name="findDept" class="postAction" method="findAllDept">
+                <action name="findDept" method="findAllDept">
                         <result name="success">/pages/post/addOrEditPost.jsp</result>
                 </action>
 
 
-                <action name="edit" class="postAction" method="edit">
-                        <result name="success">/pages/post/addOrEditPost.jsp</result>
-                </action>
+                <!--<action name="edit" method="edit">-->
+                        <!--<result name="success">/pages/post/addOrEditPost.jsp</result>-->
+                <!--</action>-->
 
 
         </package>

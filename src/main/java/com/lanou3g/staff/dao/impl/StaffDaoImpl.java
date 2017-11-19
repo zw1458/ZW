@@ -72,9 +72,19 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
 
     }
 
+    @Override
+    public List<Staff> getStaffByDeptIdAndStaffName(String deptId, String staffName) {
+        String hql = "from Staff T_STAFF where post.dept.deptId = ? and staffName like ?";
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, staffName);
+        return list;
+    }
 
-
-
+    @Override
+    public List<Staff> getStaffByThree(String deptId, String postId, String staffName) {
+        String hql = "from Staff T_STAFF where post.dept.deptId = ? and post.postId = ? and staffName like ?";
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, postId, staffName);
+        return list;
+    }
 
 
     @Override

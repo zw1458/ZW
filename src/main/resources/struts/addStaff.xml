@@ -9,26 +9,31 @@
         <package name="login" extends="base" namespace="/staff">
 
 
+                <default-class-ref class="staffAction"/>
 
-                <action name="staffAction_login" class="staffAction" method="login">
+                <!--登录!-->
+                <action name="staffAction_login" method="login">
                         <result name="success">/pages/frame.jsp</result>
                         <result name="input">/pages/login.jsp</result>
                 </action>
 
 
-                <action name="findStaff" class="staffAction" method="findStaff">
+                <!--显示员工!!-->
+                <action name="findStaff" method="findStaff">
                         <result name="success">/pages/staff/listStaff.jsp</result>
                 </action>
 
-                <action name="addStaff" class="staffAction" method="addStaff">
+                <!--为了添加!-->
+                <action name="addStaff" method="addStaff">
                         <result name="success" type="redirectAction">findStaff</result>
                 </action>
 
-                <action name="findDept" class="staffAction" method="findAllDept">
+                <!--二级联动-->
+                <action name="findDept" method="findAllDept">
                         <result name="success">/pages/staff/addStaff.jsp</result>
                 </action>
 
-                <action name="findPost" class="staffAction" method="findAllPost">
+                <action name="findPost" method="findAllPost">
                         <result name="success" type="json">
                                 <param name="root">queryStaffPost</param>
                                 <param name="includeProperties">\[\d\]\.postId,\[\d\]\.postName</param>
@@ -36,19 +41,20 @@
                 </action>
 
 
-                <action name="editStaff" class="staffAction" method="editStaff">
+                <!--编辑需要的!-->
+                <action name="editStaff" method="editStaff">
                         <result name="success">/pages/staff/editStaff.jsp</result>
                 </action>
 
 
-                <action name="editStaff2" class="staffAction" method="addStaff">
+                <action name="editStaff2" method="addStaff">
                         <result name="success" type="redirectAction">findStaff</result>
                 </action>
 
 
 
+                <!--解析数据!-->
                 <action name="staffsJson"
-                        class="staffAction"
                         method="getResult">
                         <result name="success" type="json">
                                 <param name="root">staffServiceAll</param>
@@ -62,13 +68,13 @@
 
                 <!--更换密码-->
 
-                <action name="staffAction_editPassword" class="staffAction" method="updatePwd">
+                <action name="staffAction_editPassword" method="updatePwd">
                         <result name="success" type="redirect">/pages/login.jsp</result>
                 </action>
 
 
                 <!--为了重新登录!-->
-                <action name="reLogin" class="staffAction" method="reLogin">
+                <action name="reLogin" method="reLogin">
                         <result name="success">/pages/login.jsp</result>
                 </action>
 

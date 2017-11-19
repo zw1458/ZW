@@ -45,8 +45,9 @@ public interface StaffDao{
     List<Staff> getStaffByStaffName(String staffName);
 
 
+    List<Staff> getStaffByDeptIdAndStaffName(String deptId,String staffName);
 
-
+    List<Staff> getStaffByThree(String deptId,String postId,String staffName);
 
     /*
        为了分页

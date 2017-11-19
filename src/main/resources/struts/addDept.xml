@@ -5,24 +5,31 @@
         <struts>
         <package name="dept" extends="base" namespace="/dept">
 
+                <default-class-ref class="deptAction"/>
 
-                <action name="findDept" class="deptAction" method="findDept">
+                <!--查询部门,为了在List页面显示-->
+                <action name="findDept" method="findDept">
                         <result name="success">/pages/department/listDepartment.jsp</result>
                 </action>
 
-                <action name="addDept" class="deptAction" method="editDept">
+                <!--添加!!!!!!-->
+                <action name="addDept" method="editDept">
                         <result name="success" type="chain">findDept</result>
                         <result name="input">/pages/department/addOrEditDepartment.jsp</result>
                         <result name="error">/pages/department/addOrEditDepartment.jsp</result>
 
                 </action>
 
-                <action name="editDept1" class="deptAction" method="editDept">
+                <!--编辑!!!!!
+                      底下的是为了跳到编辑页面!!!
+                      上面执行编辑后保存的方法!!!!!
+                -->
+                <action name="editDept1" method="editDept">
                         <result name="success" type="redirectAction">findDept</result>
                         <result name="error">/pages/department/addOrEditDepartment.jsp</result>
                 </action>
 
-                <action name="editDept" class="deptAction">
+                <action name="editDept">
                         <result name="success">/pages/department/addOrEditDepartment.jsp</result>
                 </action>
 

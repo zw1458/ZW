@@ -48,19 +48,36 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<Staff> queryForAll(Staff staff) {
-        if (!StringUtils.isBlank(staff.getStaffName())){
+
+        if (!StringUtils.isBlank(staff.getStaffName()) &&
+                staff.getPost().getDept().getDeptId().equals("-1") &&
+                StringUtils.isBlank(staff.getPost().getPostId())) {
+            staff.getPost().getDept().setDeptId(null);
+            staff.getPost().setPostId(null);
             return staffDao.getStaffByStaffName(staff.getStaffName());
-        }else if (!StringUtils.isBlank(staff.getPost().getPostId())&&!staff.getPost().getPostId().equals("-1")){
+        }
+        else if (!StringUtils.isBlank(staff.getPost().getPostId()) && !staff.getPost().getPostId().equals("-1")) {
             return staffDao.getStaffByPostId(staff.getPost().getPostId());
-        }else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId())&&!staff.getPost().getDept().getDeptId().equals("-1")){
+        }
+        else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId()) && !staff.getPost().getDept().getDeptId().equals("-1")) {
             staff.getPost().setPostId(null);
             return staffDao.getStaffByDeptId(staff.getPost().getDept().getDeptId());
-        }else {
+        }
+        else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId()) && !StringUtils.isBlank(staff.getStaffName()) &&
+                staff.getPost().getPostId().equals("-1")) {
+            staff.getPost().setPostId(null);
+            return staffDao.getStaffByDeptIdAndStaffName(staff.getPost().getDept().getDeptId(), staff.getStaffName());
+        }
+        else if (!StringUtils.isBlank(staff.getStaffName()) &&
+                !StringUtils.isBlank(staff.getPost().getPostId()) &&
+                !StringUtils.isBlank(staff.getPost().getDept().getDeptId())) {
+            return staffDao.getStaffByThree(staff.getPost().getDept().getDeptId(), staff.getPost().getPostId(), staff.getStaffName());
+        }
+        else {
             staff.getPost().getDept().setDeptId(null);
             staff.getPost().setPostId(null);
             return staffDao.findAll();
         }
-//        return null;
     }
 
     @Override
@@ -83,8 +100,6 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> getStaffByStaffName(String staffName) {
         return staffDao.getStaffByStaffName(staffName);
     }
-
-
 
 
     public StaffDao getStaffDao() {
