@@ -91,7 +91,15 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
         return list;
     }
 
-
+    @Override
+    public Staff LoginPwd(String loginName) {
+        String hql = "from Staff T_STAFF where loginName = ?";
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql,loginName);
+        if (list.size() == 0){
+            return null;
+        }
+        return list.get(0);
+    }
 
 
 }

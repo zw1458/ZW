@@ -32,7 +32,7 @@ public interface StaffService{
     List<Staff> queryForAll(Staff staff);
 
 
-
+    Staff LoginPwd(String loginName);
 
 
     List<Staff> getStaffByPostId(String postId);
@@ -46,7 +46,6 @@ public interface StaffService{
     /*
        为了分页
      */
-
 
 
 

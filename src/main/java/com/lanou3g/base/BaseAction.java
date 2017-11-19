@@ -61,6 +61,10 @@ public class BaseAction<T,S> extends ActionSupport implements ModelDriven<T> {
         ActionContext.getContext().getSession().put(key, value);
     }
 
+    public void sessionGet(String key){
+        ActionContext.getContext().getSession().get(key);
+    }
+
 
     public void applicationPut(String key,Object value){
         ActionContext.getContext().getApplication().put(key, value);

@@ -8,6 +8,8 @@ import com.lanou3g.post.service.PostService;
 import com.lanou3g.staff.domain.Staff;
 import com.lanou3g.staff.service.StaffService;
 import com.lanou3g.util.CrmStringUtils;
+import com.opensymphony.xwork2.ActionContext;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -39,16 +41,13 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
     private Staff staffIdList;
 
 
-
     private List<Staff> allList;
     private List<Department> departmentList;
     private List<Post> queryStaffPost;
     private List<Staff> staffByDeptIdList;
     private List<Staff> staffServiceAll;
 
-
-    //为了分页!
-
+    private String reNewPassword, newPassword, oldPassword;
 
 
     //登录的方法
@@ -57,9 +56,10 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         Staff staff1 = staffService.login(staff);
         if (staff1 != null) {
             sessionPut("login", staff.getLoginName());
+            sessionPut("loginPwd",staff.getLoginPwd());
             return SUCCESS;
         }
-        addFieldError("msg","请输入正确的用户名和密码");
+        addFieldError("msg", "请输入正确的用户名和密码");
         return INPUT;
     }
 
@@ -71,50 +71,73 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
 
         staff.setLoginPwd(CrmStringUtils.getMD5Value(staff.getLoginPwd()));
         staffService.save(staff);
-        List<Staff> all = staffService.findAll();
-        applicationPut("allList",all);
+        allList = staffService.findAll();
         return SUCCESS;
     }
 
 
     //查询所有的员工(条件查询)
     @SkipValidation
-    public String findStaff(){
+    public String findStaff() {
         departmentList = departmentService.findAll();
         allList = staffService.findAll();
+
         return SUCCESS;
     }
 
 
     //查询所有的部门
     @SkipValidation
-    public String findAllDept(){
+    public String findAllDept() {
         departmentList = departmentService.findAll();
         return SUCCESS;
     }
 
     //查询所有的职位(通过部门的ID)
     @SkipValidation
-    public String findAllPost(){
+    public String findAllPost() {
         queryStaffPost = postService.findPostByDeptId(deptId);
         return SUCCESS;
     }
 
     //通过员工的ID找到单个员工,进行编辑
     @SkipValidation
-    public String editStaff(){
+    public String editStaff() {
         departmentList = departmentService.findAll();
         staffIdList = staffService.findAllByStaffId(staff.getStaffId());
         return SUCCESS;
     }
 
 
+    //按条件查询获取数据(为了解析
+    @SkipValidation
+    public String getResult() {
+        staffServiceAll = staffService.queryForAll(staff);
+        return SUCCESS;
+    }
+
+    //为了修改密码
+    @SkipValidation
+    public String updatePwd() {
+        if (reNewPassword.equals(newPassword)){
+            //查找出登陆的员工信息
+            Staff staff = staffService.LoginPwd(ActionContext.getContext().getSession().get("login").toString());
+            //将员工密码更新保存
+            staff.setLoginPwd(CrmStringUtils.getMD5Value(newPassword));
+//            staff.setLoginPwd(newPassword);
+            staffService.save(staff);
+            return SUCCESS;
+        }else {
+            addFieldError("msg","密码不一致");
+            return INPUT;
+        }
+    }
 
 
 
     @SkipValidation
-    public String getResult(){
-        staffServiceAll = staffService.queryForAll(staff);
+    public String reLogin(){
+        ActionContext.getContext().getSession().remove("login");
         return SUCCESS;
     }
 
@@ -123,7 +146,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
 
 
 
-    // 为了分页的方法!!!!!!
+    // 为了分页的方法!!!!!!( 不想写了!!!!!!!!!!
 
 
 
@@ -142,6 +165,29 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
       以下全是弱智
      */
 
+    public String getReNewPassword() {
+        return reNewPassword;
+    }
+
+    public void setReNewPassword(String reNewPassword) {
+        this.reNewPassword = reNewPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 
     public Staff getStaff() {
         return staff;

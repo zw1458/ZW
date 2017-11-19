@@ -28,6 +28,8 @@ public interface StaffDao{
 
 
 
+    Staff LoginPwd(String loginName);
+
 
 
 

@@ -39,7 +39,6 @@ public class DeptAction extends BaseAction<Department, DepartmentService> {
         if (departmentService.save(department)){
             return SUCCESS;
         }
-//        departmentService.save(department);
         addFieldError("msg","部门名已存在");
         return ERROR;
     }

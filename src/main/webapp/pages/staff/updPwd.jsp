@@ -33,7 +33,7 @@
 </head>
 
 <body class="updpwd">
-	<form action="/crm2/staff/staffAction_editPassword.action" method="post">
+	<form action="/staff/staffAction_editPassword.action" method="post">
 		<table style="width: 200px">
 			<tr>
 				<td colspan="2">
@@ -42,7 +42,7 @@
 			</tr>
 			<tr>
 				<td>原始密码：</td>
-				<td><input type="password" name="oldPassword" value="" /></td>
+				<td><input type="password" name="loginPwd" value="${sessionScope.get("loginPwd")}" /></td>
 			</tr>
 			<tr>
 				<td>新&nbsp;密&nbsp;码：</td>

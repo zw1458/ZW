@@ -58,5 +58,20 @@
                         </result>
                 </action>
 
+
+
+                <!--更换密码-->
+
+                <action name="staffAction_editPassword" class="staffAction" method="updatePwd">
+                        <result name="success" type="redirect">/pages/login.jsp</result>
+                </action>
+
+
+                <!--为了重新登录!-->
+                <action name="reLogin" class="staffAction" method="reLogin">
+                        <result name="success">/pages/login.jsp</result>
+                </action>
+
+
         </package>
 </struts>

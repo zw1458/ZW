@@ -53,7 +53,6 @@ public class StaffServiceImpl implements StaffService {
         }else if (!StringUtils.isBlank(staff.getPost().getPostId())&&!staff.getPost().getPostId().equals("-1")){
             return staffDao.getStaffByPostId(staff.getPost().getPostId());
         }else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId())&&!staff.getPost().getDept().getDeptId().equals("-1")){
-
             staff.getPost().setPostId(null);
             return staffDao.getStaffByDeptId(staff.getPost().getDept().getDeptId());
         }else {
@@ -62,6 +61,11 @@ public class StaffServiceImpl implements StaffService {
             return staffDao.findAll();
         }
 //        return null;
+    }
+
+    @Override
+    public Staff LoginPwd(String loginName) {
+        return staffDao.LoginPwd(loginName);
     }
 
     @Override
@@ -79,6 +83,7 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> getStaffByStaffName(String staffName) {
         return staffDao.getStaffByStaffName(staffName);
     }
+
 
 
 
