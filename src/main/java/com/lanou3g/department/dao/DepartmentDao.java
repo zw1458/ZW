@@ -19,4 +19,8 @@ public interface DepartmentDao extends BaseDao<Department> {
 
 
     List<Department> findDeptByDeptName(String deptName);
+
+    int getTotalRecord();
+
+    List<Department> findDeptForPage(int startIndex, int pageSize);
 }

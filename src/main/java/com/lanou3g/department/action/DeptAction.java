@@ -4,6 +4,8 @@ import com.lanou3g.base.BaseAction;
 import com.lanou3g.department.domain.Department;
 import com.lanou3g.department.service.DepartmentService;
 import com.lanou3g.department.service.impl.DepartmentServiceImpl;
+import com.lanou3g.page.domain.PageBean;
+import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
@@ -52,6 +54,31 @@ public class DeptAction extends BaseAction<Department, DepartmentService> {
         }
         return SUCCESS;
     }
+
+//为了分页!!!!!!!!!!!!!
+
+    //分页 pageNum, pageSize 并设置默认值
+    private int pageNum = 1;
+
+    public void setPageNum(int pageNum
+    ) {
+        this.pageNum = pageNum;
+    }
+
+    private int pageSize = 5;
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+
+
+    public String findAllDeptsForPage(){
+        PageBean<Department> forPage = departmentService.findDeptForPage(getModel(), pageNum, pageSize);
+        ActionContext.getContext().put("pageBean",forPage);
+        return SUCCESS;
+    }
+
 
 
 

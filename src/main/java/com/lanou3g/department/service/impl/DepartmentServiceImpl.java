@@ -4,6 +4,7 @@ import com.lanou3g.department.dao.DepartmentDao;
 import com.lanou3g.department.dao.impl.DepartmentDaoImpl;
 import com.lanou3g.department.domain.Department;
 import com.lanou3g.department.service.DepartmentService;
+import com.lanou3g.page.domain.PageBean;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Resource;
@@ -54,6 +55,15 @@ public class DepartmentServiceImpl implements DepartmentService {
             return department;
         }
         return null;
+    }
+
+    @Override
+    public PageBean<Department> findDeptForPage(Department model, int pageNum, int pageSize) {
+        int totalRecord = departmentDao.getTotalRecord();
+        PageBean<Department> bean = new PageBean<>(pageNum, pageSize, totalRecord);
+        List<Department> deptForPage = departmentDao.findDeptForPage(bean.getStartIndex(), bean.getPageSize());
+        bean.setData(deptForPage);
+        return bean;
     }
 
 

@@ -2,6 +2,7 @@ package com.lanou3g.department.dao.impl;
 
 import com.lanou3g.department.dao.DepartmentDao;
 import com.lanou3g.department.domain.Department;
+import com.lanou3g.page.utils.PageHibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -51,12 +52,21 @@ public class DepartmentDaoImpl extends HibernateDaoSupport implements Department
         return list;
     }
 
+    @Override
+    public int getTotalRecord() {
+        String hql = "select count(c) from Department c where 1=1";
+        List<Long> list = (List<Long>) getHibernateTemplate().find(hql);
+        if (list!=null){
+            return list.get(0).intValue();
+        }
+        return 0;
+    }
 
-
-
-
-
-
+    @Override
+    public List<Department> findDeptForPage(int startIndex, int pageSize) {
+        String hql = "from Department where 1 = 1";
+        return getHibernateTemplate().execute(new PageHibernateCallback<Department>(hql,startIndex,pageSize));
+    }
 
 
     @Override

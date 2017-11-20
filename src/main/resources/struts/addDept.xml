@@ -14,7 +14,7 @@
 
                 <!--添加!!!!!!-->
                 <action name="addDept" method="editDept">
-                        <result name="success" type="chain">findDept</result>
+                        <result name="success" type="redirectAction">deptforPage</result>
                         <result name="input">/pages/department/addOrEditDepartment.jsp</result>
                         <result name="error">/pages/department/addOrEditDepartment.jsp</result>
 
@@ -34,6 +34,10 @@
                 </action>
 
 
+                <!--为了分页!!!!!-->
+                <action name="deptforPage" method="findAllDeptsForPage">
+                        <result name="success">/pages/department/listDepartment.jsp</result>
+                </action>
 
         </package>
 </struts>

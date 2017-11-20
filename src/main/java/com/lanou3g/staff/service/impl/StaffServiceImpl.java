@@ -17,12 +17,14 @@ public class StaffServiceImpl implements StaffService {
     private StaffDao staffDao;
 
 
+    //登录的方法
     @Override
     public Staff login(Staff staff) {
 
         return staffDao.findStaffByLoginNameAndLoginPwd(staff);
     }
 
+    //添加和编辑的方法
     @Override
     public boolean save(Staff staff) {
         staffDao.save(staff);
@@ -49,30 +51,46 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<Staff> queryForAll(Staff staff) {
 
-        if (!StringUtils.isBlank(staff.getStaffName()) &&
-                staff.getPost().getDept().getDeptId().equals("-1") &&
-                StringUtils.isBlank(staff.getPost().getPostId())) {
+        //只有名字
+        if (!StringUtils.isBlank(staff.getStaffName())
+                && staff.getPost().getDept().getDeptId().equals("-1")
+                && staff.getPost().getPostId().equals("-1")) {
             staff.getPost().getDept().setDeptId(null);
             staff.getPost().setPostId(null);
             return staffDao.getStaffByStaffName(staff.getStaffName());
         }
-        else if (!StringUtils.isBlank(staff.getPost().getPostId()) && !staff.getPost().getPostId().equals("-1")) {
+        //有部门和职务没有名字
+        else if (!StringUtils.isBlank(staff.getPost().getPostId())
+                && !staff.getPost().getPostId().equals("-1")) {
+//            staff.setStaffName(null);
             return staffDao.getStaffByPostId(staff.getPost().getPostId());
         }
-        else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId()) && !staff.getPost().getDept().getDeptId().equals("-1")) {
+        //有部门 没有职位和姓名
+        else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId())
+                && !staff.getPost().getDept().getDeptId().equals("-1")) {
             staff.getPost().setPostId(null);
             return staffDao.getStaffByDeptId(staff.getPost().getDept().getDeptId());
         }
-        else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId()) && !StringUtils.isBlank(staff.getStaffName()) &&
-                staff.getPost().getPostId().equals("-1")) {
+        //有姓名 和 部门
+        else if (!StringUtils.isBlank(staff.getStaffName())
+                &&!StringUtils.isBlank(staff.getPost().getDept().getDeptId())
+                &&!staff.getPost().getDept().getDeptId().equals("-1")
+                && staff.getPost().getPostId().equals("-1")
+                ){
             staff.getPost().setPostId(null);
-            return staffDao.getStaffByDeptIdAndStaffName(staff.getPost().getDept().getDeptId(), staff.getStaffName());
+            return staffDao.getStaffByDeptIdAndStaffName(staff.getPost().getDept().getDeptId(),
+                    staff.getStaffName());
         }
+        //三个都有
         else if (!StringUtils.isBlank(staff.getStaffName()) &&
                 !StringUtils.isBlank(staff.getPost().getPostId()) &&
-                !StringUtils.isBlank(staff.getPost().getDept().getDeptId())) {
+                !StringUtils.isBlank(staff.getPost().getDept().getDeptId())
+                &&!staff.getPost().getDept().getDeptId().equals("-1")
+                &&!staff.getPost().getPostId().equals("-1")
+                ) {
             return staffDao.getStaffByThree(staff.getPost().getDept().getDeptId(), staff.getPost().getPostId(), staff.getStaffName());
         }
+        //三个都没有
         else {
             staff.getPost().getDept().setDeptId(null);
             staff.getPost().setPostId(null);
@@ -100,6 +118,11 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> getStaffByStaffName(String staffName) {
         return staffDao.getStaffByStaffName(staffName);
     }
+
+
+
+
+
 
 
     public StaffDao getStaffDao() {
