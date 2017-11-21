@@ -36,6 +36,7 @@
           <file>file://$MODULE_DIR$/src/main/resources/spring/spring-config.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/spring/spring-dept.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/spring/spring-post.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/spring-staff.xml</file>
         </fileset>
       </configuration>
     </facet>

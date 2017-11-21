@@ -40,7 +40,7 @@
 				}
 			});
 
-			xhr.open("POST", "http://localhost:8080/staff/findPost.action");
+			xhr.open("POST", "${pageContext.request.contextPath}/staff/findPost.action");
 
 			xhr.send(data);
 		}

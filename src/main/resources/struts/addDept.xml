@@ -8,6 +8,7 @@
                 <default-class-ref class="deptAction"/>
 
                 <!--查询部门,为了在List页面显示-->
+                <!--不用了!-->
                 <action name="findDept" method="findDept">
                         <result name="success">/pages/department/listDepartment.jsp</result>
                 </action>

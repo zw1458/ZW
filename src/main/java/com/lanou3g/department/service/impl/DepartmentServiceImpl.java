@@ -23,7 +23,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     public boolean save(Department department) {
         Department byDeptName = findDeptByDeptName(department.getDeptName());
         if (byDeptName == null) {
-
             return departmentDao.saveOrUpdate(department);
         }else {
             return false;

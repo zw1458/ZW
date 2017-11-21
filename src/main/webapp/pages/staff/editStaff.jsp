@@ -40,7 +40,7 @@
                 }
             });
 
-            xhr.open("POST", "http://localhost:8080/staff/findPost.action");
+            xhr.open("POST", "${pageContext.request.contextPath}/staff/findPost.action");
 
             xhr.send(data);
         }
@@ -123,6 +123,15 @@
             <td width="8%">职务：</td>
             <td width="62%">
                 <select id="post" name="postId">
+                    <%--<s:iterator value="postByPostIdList" var="ps">--%>
+                        <%--<s:if test="#ps.postId==staffIdList.post.postId">--%>
+                            <%--<option value="${ps.postId}"--%>
+                                    <%--selected="selected">${staffIdList.post.postName}</option>--%>
+                        <%--</s:if>--%>
+                        <%--<s:else>--%>
+                            <%--<option value="${ps.postId}">${ps.postName}</option>--%>
+                        <%--</s:else>--%>
+                    <%--</s:iterator>--%>
                     <option value="${postId}">${staffIdList.post.postName}</option>
                 </select>
             </td>

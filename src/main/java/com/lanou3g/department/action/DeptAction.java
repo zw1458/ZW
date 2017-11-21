@@ -48,31 +48,29 @@ public class DeptAction extends BaseAction<Department, DepartmentService> {
 
 
     //为了验证!!(部门名不能为空的判断!!!!!!
-    public String validateEditDept(){
+    public void validateEditDept(){
         if (StringUtils.isBlank(getModel().getDeptName())){
             addFieldError("error","部门名不能为空");
         }
-        return SUCCESS;
     }
+
+
+
+
+
 
 //为了分页!!!!!!!!!!!!!
 
     //分页 pageNum, pageSize 并设置默认值
     private int pageNum = 1;
 
-    public void setPageNum(int pageNum
-    ) {
+    public void setPageNum(int pageNum) {
         this.pageNum = pageNum;
     }
-
     private int pageSize = 5;
-
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
-
-
-
     public String findAllDeptsForPage(){
         PageBean<Department> forPage = departmentService.findDeptForPage(getModel(), pageNum, pageSize);
         ActionContext.getContext().put("pageBean",forPage);

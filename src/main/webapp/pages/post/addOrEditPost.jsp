@@ -66,6 +66,7 @@
          </tr>
 	</table>
 </form>
+<s:fielderror/>
 
 </body>
 </html>

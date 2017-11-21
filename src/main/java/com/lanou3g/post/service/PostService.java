@@ -1,6 +1,7 @@
 package com.lanou3g.post.service;
 
 import com.lanou3g.department.domain.Department;
+import com.lanou3g.page.domain.PageBean;
 import com.lanou3g.post.domain.Post;
 import javafx.geometry.Pos;
 
@@ -19,4 +20,6 @@ public interface PostService {
     void edit(Post post);
 
     List<Post> findPostByDeptId(String deptId);
+
+    PageBean<Post> findDeptForPage(Post model, int pageNum, int pageSize);
 }

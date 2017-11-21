@@ -32,16 +32,6 @@
 
     </bean>
 
-    <bean id="staffDao" class="com.lanou3g.staff.dao.impl.StaffDaoImpl">
-
-        <!--为继承来的SessionFactory属性赋值-->
-        <property name="sessionFactory" ref="sessionFactory"/>
-
-    </bean>
-
-    <bean id="staffService" class="com.lanou3g.staff.service.impl.StaffServiceImpl">
-        <property name="staffDao" ref="staffDao"/>
-    </bean>
 
     <!--创建事务管理器-->
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">

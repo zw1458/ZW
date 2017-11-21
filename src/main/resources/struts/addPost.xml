@@ -21,6 +21,7 @@
 
                 <action name="addPost" method="edit">
                         <result name="success" type="redirectAction">findPost</result>
+                        <!--<result name="input">/pages/post/addOrEditPost.jsp</result>-->
                 </action>
 
                 <action name="findDept" method="findAllDept">
@@ -31,6 +32,11 @@
                 <!--<action name="edit" method="edit">-->
                         <!--<result name="success">/pages/post/addOrEditPost.jsp</result>-->
                 <!--</action>-->
+
+
+                <action name="postforPage" method="findAllPostForPage">
+                        <result name="success">/pages/post/listPost.jsp</result>
+                </action>
 
 
         </package>

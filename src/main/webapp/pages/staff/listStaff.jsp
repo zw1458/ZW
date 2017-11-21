@@ -83,7 +83,7 @@
 
             });
 
-            xhr.open("POST", "http://localhost:8080/staff/staffsJson.action");
+            xhr.open("POST", "${pageContext.request.contextPath}/staff/staffsJson.action");
 
             xhr.send(data);
 
@@ -119,7 +119,7 @@
                 }
             });
 
-            xhr.open("POST", "http://localhost:8080/staff/findPost.action");
+            xhr.open("POST", "${pageContext.request.contextPath}/staff/findPost.action");
 
             xhr.send(data);
         }
@@ -127,11 +127,7 @@
     </script>
 
 
-    <script type="text/javascript">
-        function onStaffsQuery() {
-            document.getElementById("getStaffs").submit();
-        }
-    </script>
+
 
 
     <script type="text/javascript">

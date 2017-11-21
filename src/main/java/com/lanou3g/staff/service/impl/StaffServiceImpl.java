@@ -62,16 +62,18 @@ public class StaffServiceImpl implements StaffService {
         //有部门和职务没有名字
         else if (!StringUtils.isBlank(staff.getPost().getPostId())
                 && !staff.getPost().getPostId().equals("-1")) {
-//            staff.setStaffName(null);
             return staffDao.getStaffByPostId(staff.getPost().getPostId());
         }
         //有部门 没有职位和姓名
         else if (!StringUtils.isBlank(staff.getPost().getDept().getDeptId())
-                && !staff.getPost().getDept().getDeptId().equals("-1")) {
+                && !staff.getPost().getDept().getDeptId().equals("-1")
+                && staff.getPost().getPostId().equals("-1")
+                && StringUtils.isBlank(staff.getStaffName())
+                ) {
             staff.getPost().setPostId(null);
             return staffDao.getStaffByDeptId(staff.getPost().getDept().getDeptId());
         }
-        //有姓名 和 部门
+        //有姓名和部门
         else if (!StringUtils.isBlank(staff.getStaffName())
                 &&!StringUtils.isBlank(staff.getPost().getDept().getDeptId())
                 &&!staff.getPost().getDept().getDeptId().equals("-1")
@@ -99,25 +101,30 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Staff LoginPwd(String loginName) {
-        return staffDao.LoginPwd(loginName);
+    public Staff loginPwd(String loginName) {
+        return staffDao.loginPwd(loginName);
     }
 
     @Override
-    public List<Staff> getStaffByPostId(String postId) {
-        return staffDao.getStaffByPostId(postId);
+    public List<Post> getPostByPostId(String postId) {
+        return staffDao.getPostByPostId(postId);
     }
 
-
-    @Override
-    public List<Staff> getStaffByDeptId(String deptId) {
-        return staffDao.getStaffByDeptId(deptId);
-    }
-
-    @Override
-    public List<Staff> getStaffByStaffName(String staffName) {
-        return staffDao.getStaffByStaffName(staffName);
-    }
+//    @Override
+//    public List<Staff> getStaffByPostId(String postId) {
+//        return staffDao.getStaffByPostId(postId);
+//    }
+//
+//
+//    @Override
+//    public List<Staff> getStaffByDeptId(String deptId) {
+//        return staffDao.getStaffByDeptId(deptId);
+//    }
+//
+//    @Override
+//    public List<Staff> getStaffByStaffName(String staffName) {
+//        return staffDao.getStaffByStaffName(staffName);
+//    }
 
 
 

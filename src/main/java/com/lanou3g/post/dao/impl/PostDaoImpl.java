@@ -1,6 +1,7 @@
 package com.lanou3g.post.dao.impl;
 
 import com.lanou3g.department.domain.Department;
+import com.lanou3g.page.utils.PageHibernateCallback;
 import com.lanou3g.post.dao.PostDao;
 import com.lanou3g.post.domain.Post;
 import javafx.geometry.Pos;
@@ -50,6 +51,22 @@ public class PostDaoImpl extends HibernateDaoSupport implements PostDao {
         String sql = "from Post T_POST where dept.deptId = ?";
         List<Post> list = (List<Post>) getHibernateTemplate().find(sql,deptId);
         return list;
+    }
+
+    @Override
+    public int getTotalRecord() {
+        String hql = "select count(c) from Post c where 1=1";
+        List<Long> list = (List<Long>) getHibernateTemplate().find(hql);
+        if (list!=null){
+            return list.get(0).intValue();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Post> findDeptForPage(int startIndex, int pageSize) {
+        String hql = "from Department where 1 = 1";
+        return getHibernateTemplate().execute(new PageHibernateCallback<Post>(hql,startIndex,pageSize));
     }
 
 

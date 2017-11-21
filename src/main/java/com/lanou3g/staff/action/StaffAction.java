@@ -9,6 +9,7 @@ import com.lanou3g.staff.domain.Staff;
 import com.lanou3g.staff.service.StaffService;
 import com.lanou3g.util.CrmStringUtils;
 import com.opensymphony.xwork2.ActionContext;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
@@ -48,6 +49,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
     private List<Staff> staffServiceAll;
 
     private String reNewPassword, newPassword, oldPassword;
+    private List<Post> postByPostIdList;
 
 
     //登录的方法
@@ -56,7 +58,7 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         Staff staff1 = staffService.login(staff);
         if (staff1 != null) {
             sessionPut("login", staff.getLoginName());
-            sessionPut("loginPwd",staff.getLoginPwd());
+            sessionPut("loginPwd", staff.getLoginPwd());
             return SUCCESS;
         }
         addFieldError("msg", "请输入正确的用户名和密码");
@@ -100,6 +102,16 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
         return SUCCESS;
     }
 
+    @SkipValidation
+    public String findPostByPostId(){
+        postByPostIdList = staffService.getPostByPostId(postId);
+        return SUCCESS;
+    }
+
+
+
+
+
     //通过员工的ID找到单个员工,进行编辑
     @SkipValidation
     public String editStaff() {
@@ -119,32 +131,29 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
     //为了修改密码!!!
     @SkipValidation
     public String updatePwd() {
-        if (reNewPassword.equals(newPassword)){
+        if (!StringUtils.isBlank(reNewPassword) &&
+                !StringUtils.isBlank(newPassword)&&reNewPassword.equals(newPassword)) {
             //查找出登陆的员工信息
-            Staff staff = staffService.LoginPwd(ActionContext.getContext().getSession().get("login").toString());
+            Staff staff = staffService.loginPwd(ActionContext.getContext().getSession().
+                    get("login").toString());
             //将员工密码更新保存
             staff.setLoginPwd(CrmStringUtils.getMD5Value(newPassword));
-//            staff.setLoginPwd(newPassword);
             staffService.save(staff);
             return SUCCESS;
-        }else {
-            addFieldError("msg","密码不一致");
-            return INPUT;
+        } else {
+            addFieldError("msg", "请输入正确的密码");
+
+            return ERROR;
         }
     }
 
 
-
     //为了重新登录!!!
     @SkipValidation
-    public String reLogin(){
+    public String reLogin() {
         ActionContext.getContext().getSession().remove("login");
         return SUCCESS;
     }
-
-
-
-
 
 
     // 为了分页的方法!!!!!!( 不想写了!!!!!!!!!!
@@ -287,5 +296,13 @@ public class StaffAction extends BaseAction<Staff, StaffService> {
 
     public void setStaffServiceAll(List<Staff> staffServiceAll) {
         this.staffServiceAll = staffServiceAll;
+    }
+
+    public List<Post> getPostByPostIdList() {
+        return postByPostIdList;
+    }
+
+    public void setPostByPostIdList(List<Post> postByPostIdList) {
+        this.postByPostIdList = postByPostIdList;
     }
 }

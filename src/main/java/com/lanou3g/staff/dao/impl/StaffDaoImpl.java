@@ -3,6 +3,7 @@ package com.lanou3g.staff.dao.impl;
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.dao.StaffDao;
 import com.lanou3g.staff.domain.Staff;
+import javafx.geometry.Pos;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -75,14 +76,21 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
     @Override
     public List<Staff> getStaffByDeptIdAndStaffName(String deptId, String staffName) {
         String hql = "from Staff T_STAFF where post.dept.deptId = ? and staffName like ?";
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, staffName);
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, "%"+staffName+"%");
         return list;
     }
 
     @Override
     public List<Staff> getStaffByThree(String deptId, String postId, String staffName) {
         String hql = "from Staff T_STAFF where post.dept.deptId = ? and post.postId = ? and staffName like ?";
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, postId, staffName);
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, postId, "%"+staffName+"%");
+        return list;
+    }
+
+    @Override
+    public List<Post> getPostByPostId(String postId) {
+        String hql = "from Post T_POST where postId = ?";
+        List<Post> list = (List<Post>) getHibernateTemplate().find(hql, postId);
         return list;
     }
 
@@ -102,7 +110,7 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
     }
 
     @Override
-    public Staff LoginPwd(String loginName) {
+    public Staff loginPwd(String loginName) {
         String hql = "from Staff T_STAFF where loginName = ?";
         List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql,loginName);
         if (list.size() == 0){

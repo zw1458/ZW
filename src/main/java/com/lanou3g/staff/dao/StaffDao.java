@@ -28,7 +28,7 @@ public interface StaffDao{
 
 
 
-    Staff LoginPwd(String loginName);
+    Staff loginPwd(String loginName);
 
 
 
@@ -53,6 +53,7 @@ public interface StaffDao{
        为了分页
      */
 
+    List<Post> getPostByPostId(String postId);
 
 
 }

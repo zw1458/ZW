@@ -1,6 +1,7 @@
 package com.lanou3g.post.service.impl;
 
 import com.lanou3g.department.domain.Department;
+import com.lanou3g.page.domain.PageBean;
 import com.lanou3g.post.dao.PostDao;
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.post.service.PostService;
@@ -39,6 +40,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> findPostByDeptId(String deptId) {
         return postDao.findPostByDeptId(deptId);
+    }
+
+    @Override
+    public PageBean<Post> findDeptForPage(Post model, int pageNum, int pageSize) {
+        int totalRecord = postDao.getTotalRecord();
+        PageBean<Post> bean = new PageBean<>(pageNum, pageSize, totalRecord);
+        List<Post> posts = postDao.findDeptForPage(bean.getStartIndex(), bean.getPageSize());
+        bean.setData(posts);
+        return bean;
     }
 
 

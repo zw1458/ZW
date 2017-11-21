@@ -57,22 +57,62 @@
             </td>
         </tr>
     </s:iterator>
+
+
+    <%--<s:iterator value="#pageBean.data" var="p">--%>
+        <%--<tr class="tabtd1">--%>
+            <%--<td align="center">${p.dept.deptName}</td>--%>
+            <%--<td align="center">${p.postName}</td>--%>
+            <%--<td width="7%" align="center">--%>
+                <%--<a href="/post/edit.action?dept.deptId=${p.dept.deptId}&postId=${p.postId}&postName=${p.postName}">--%>
+                    <%--<img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>--%>
+            <%--</td>--%>
+        <%--</tr>--%>
+    <%--</s:iterator>--%>
 </table>
 
 
 
-<table border="0" cellspacing="0" cellpadding="0" align="center">
-  <tr>
-    <td align="right">
-    	<span>第1/3页</span>
-        <span>
-        	<a href="#">[首页]</a>&nbsp;&nbsp;
-            <a href="#">[上一页]</a>&nbsp;&nbsp;
-            <a href="#">[下一页]</a>&nbsp;&nbsp;
-            <a href="#">[尾页]</a>
-        </span>
-    </td>
-  </tr>
-</table>
+ <table border="0" cellspacing="0" cellpadding="0" align="center">
+     <tr>
+         <td align="right">
+             第<s:property value="%{#pageBean.pageNum}"/>页/共<s:property
+                 value="#pageBean.totalPage"/>页</span>
+             <s:a action="postforPage">
+                 首页
+                 <s:param name="pageNum" value="'1'"/>
+             </s:a>
+             <s:if test="%{#pageBean.pageNum > 1}">
+                 <s:a action="postforPage">
+                     上一页
+                     <s:param name="pageNum" value="%{#pageBean.pageNum - 1}"/>
+                 </s:a>
+             </s:if>
+             <s:iterator var="i" begin="%{#pageBean.start}" end="%{#pageBean.end}">
+                 <s:if test="%{#i eq #pageBean.pageNum}">
+                     <font color="red">
+                         <s:property value="%{#i}"/>
+                     </font>
+                 </s:if>
+                 <s:else>
+                     <s:a action="postforPage">
+                         [<s:property value="%{#i}"/>]
+                         <s:param name="pageNum" value="%{#i}"/>
+                     </s:a>
+                 </s:else>
+             </s:iterator>
+             <s:if test="%{#pageBean.pageNum < #pageBean.totalPage}">
+                 <s:a action="postforPage">
+                     <s:param name="pageNum" value="%{#pageBean.pageNum + 1}"/>
+                     下一页
+                 </s:a>
+             </s:if>
+             <s:a action="postforPage">
+                 <s:param name="pageNum" value="%{#pageBean.totalPage}"/>
+                 尾页
+             </s:a>
+         </td>
+     </tr>
+ </table>
 </body>
 </html>

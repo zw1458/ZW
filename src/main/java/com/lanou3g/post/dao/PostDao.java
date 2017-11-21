@@ -19,4 +19,8 @@ public interface PostDao {
     void saveOrUpdate(Post post);
 
     List<Post> findPostByDeptId(String deptId);
+
+    int getTotalRecord();
+
+    List<Post> findDeptForPage(int startIndex, int pageSize);
 }

@@ -32,16 +32,20 @@ public interface StaffService{
     List<Staff> queryForAll(Staff staff);
 
 
-    Staff LoginPwd(String loginName);
+    Staff loginPwd(String loginName);
 
 
-    List<Staff> getStaffByPostId(String postId);
+
+    List<Post> getPostByPostId(String postId);
 
 
-    List<Staff> getStaffByDeptId(String deptId);
-
-
-    List<Staff> getStaffByStaffName(String staffName);
+//    List<Staff> getStaffByPostId(String postId);
+//
+//
+//    List<Staff> getStaffByDeptId(String deptId);
+//
+//
+//    List<Staff> getStaffByStaffName(String staffName);
 
 
 
