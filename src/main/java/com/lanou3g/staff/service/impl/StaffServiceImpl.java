@@ -61,7 +61,9 @@ public class StaffServiceImpl implements StaffService {
         }
         //有部门和职务没有名字
         else if (!StringUtils.isBlank(staff.getPost().getPostId())
-                && !staff.getPost().getPostId().equals("-1")) {
+                && !staff.getPost().getPostId().equals("-1")
+                && StringUtils.isBlank(staff.getStaffName())
+                ) {
             return staffDao.getStaffByPostId(staff.getPost().getPostId());
         }
         //有部门 没有职位和姓名

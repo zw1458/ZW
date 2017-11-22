@@ -38,16 +38,16 @@
 		<table style="width: 200px">
 			<tr>
 				<td colspan="2">
-					<span id="msgId" class="upd_pwd_msg"> </span>
+					<span id="msgId" class="upd_pwd_msg"></span>
 				</td>
 			</tr>
 			<tr>
 				<td>原始密码：</td>
-				<td><input type="password" name="loginPwd" value="${sessionScope.get("loginPwd")}" /></td>
+				<td><input type="password" name="loginPwd" value="${sessionScope.get("loginPwd")}"  readonly = readonly/></td>
 			</tr>
 			<tr>
 				<td>新&nbsp;密&nbsp;码：</td>
-				<td><input type="password" name="newPassword" value="" /></td>
+				<td><input type="pass6word" name="newPassword" value="" /></td>
 			</tr>
 			<tr>
 				<td>确认密码：</td>

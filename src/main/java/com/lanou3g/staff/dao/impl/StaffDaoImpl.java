@@ -20,16 +20,16 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
         if (staff.getStaffId() == 0) {
             getHibernateTemplate().save(staff);
         }
-            getHibernateTemplate().saveOrUpdate(staff);
-            return true;
+        getHibernateTemplate().saveOrUpdate(staff);
+        return true;
     }
 
     @Override
     public Staff findStaffByLoginNameAndLoginPwd(Staff staff) {
         String hql = "from Staff T_STAFF where loginName = ? and loginPwd = ?";
 
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql,staff.getLoginName(),staff.getLoginPwd());
-        if (list.size() == 0){
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, staff.getLoginName(), staff.getLoginPwd());
+        if (list.size() == 0) {
             return null;
         }
         return list.get(0);
@@ -48,12 +48,10 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
     }
 
 
-
-
     @Override
     public List<Staff> getStaffByPostId(String postId) {
         String sql = "from Staff T_STAFF where post.postId = ?";
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(sql,postId);
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(sql, postId);
         return list;
     }
 
@@ -68,7 +66,7 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
     @Override
     public List<Staff> getStaffByStaffName(String staffName) {
         String sql = "from Staff T_STAFF where staffName like ?";
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(sql, "%"+staffName+"%");
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(sql, "%" + staffName + "%");
         return list;
 
     }
@@ -76,14 +74,14 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
     @Override
     public List<Staff> getStaffByDeptIdAndStaffName(String deptId, String staffName) {
         String hql = "from Staff T_STAFF where post.dept.deptId = ? and staffName like ?";
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, "%"+staffName+"%");
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, "%" + staffName + "%");
         return list;
     }
 
     @Override
     public List<Staff> getStaffByThree(String deptId, String postId, String staffName) {
         String hql = "from Staff T_STAFF where post.dept.deptId = ? and post.postId = ? and staffName like ?";
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, postId, "%"+staffName+"%");
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, deptId, postId, "%" + staffName + "%");
         return list;
     }
 
@@ -112,12 +110,10 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
     @Override
     public Staff loginPwd(String loginName) {
         String hql = "from Staff T_STAFF where loginName = ?";
-        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql,loginName);
-        if (list.size() == 0){
+        List<Staff> list = (List<Staff>) getHibernateTemplate().find(hql, loginName);
+        if (list.size() == 0) {
             return null;
         }
         return list.get(0);
     }
-
-
 }

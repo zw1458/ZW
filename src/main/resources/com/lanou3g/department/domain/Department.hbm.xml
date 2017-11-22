@@ -8,7 +8,7 @@
             <generator class="uuid"/>
         </id>
         <property name="deptName"/>
-        <set name="posts" table="T_POST">
+        <set name="posts" table="T_POST" cascade="save-update" inverse="true">
             <key column="DEPT_ID"></key>
             <one-to-many class="com.lanou3g.post.domain.Post"/>
         </set>
