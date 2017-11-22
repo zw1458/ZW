@@ -2,11 +2,17 @@ package com.lanou3g.staff.dao.impl;
 
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.dao.StaffDao;
+import com.lanou3g.staff.domain.PagerBean;
 import com.lanou3g.staff.domain.Staff;
 import javafx.geometry.Pos;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,6 +96,46 @@ public class StaffDaoImpl extends HibernateDaoSupport implements StaffDao {
         String hql = "from Post T_POST where postId = ?";
         List<Post> list = (List<Post>) getHibernateTemplate().find(hql, postId);
         return list;
+    }
+
+    @Override
+    public PagerBean findStaffsByPage(int currentPage, String deptId, String postId, String staffName) {
+        return getHibernateTemplate().execute(new HibernateCallback<PagerBean>() {
+            @Override
+            public PagerBean doInHibernate(Session session) throws HibernateException {
+
+                StringBuilder builder = new StringBuilder("from Staff where 1 = 1 ");
+                List<Object> values = new ArrayList<>();
+                if (!"-1".equals(deptId)){
+                    builder.append("and post.dept.deptId = ? ");
+                    values.add(deptId);
+                }
+                if (!"-1".equals(postId)){
+                    builder.append("and post.postId = ? ");
+                    values.add(postId);
+                }
+                if (!"".equals(staffName)){
+                    builder.append("and staffName like ?");
+                    values.add("%" + staffName + "%");
+                }
+                Query countQuery = session.createQuery(builder.toString());
+
+                Query query = session.createQuery(builder.toString());
+                for (int i = 0; i < values.size(); i++) {
+                    query.setParameter(i, values.get(i));
+                    countQuery.setParameter(i, values.get(i));
+                }
+                int size = countQuery.list().size();
+                int pageCount = size % 2 == 0 ? size / 2 : size / 2 + 1;
+                // 设置分页
+                query.setFirstResult(currentPage * 2);
+                query.setMaxResults(2);
+                PagerBean bean = new PagerBean();
+                bean.setTotalSize(pageCount);
+                bean.setStaffs(query.list());
+                return bean;
+            }
+        });
     }
 
 

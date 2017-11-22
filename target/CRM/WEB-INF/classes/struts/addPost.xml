@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+        <struts>
+        <package name="postt" extends="base" namespace="/post">
+
+                <default-class-ref class="postAction"/>
+
+
+
+                <!--这尼玛是跟部门一样的!!!!
+
+                    就是这次要把部门的信息传过来!!
+                -->
+
+
+                <action name="findPost" method="findAllPost">
+                        <result name="success">/pages/post/listPost.jsp</result>
+                </action>
+
+                <action name="addPost" method="edit">
+                        <result name="success" type="redirectAction">findPost</result>
+                        <!--<result name="input">/pages/post/addOrEditPost.jsp</result>-->
+                </action>
+
+                <action name="findDept" method="findAllDept">
+                        <result name="success">/pages/post/addOrEditPost.jsp</result>
+                </action>
+
+
+                <!--<action name="edit" method="edit">-->
+                        <!--<result name="success">/pages/post/addOrEditPost.jsp</result>-->
+                <!--</action>-->
+
+
+                <action name="postforPage" method="findAllPostForPage">
+                        <result name="success">/pages/post/listPost.jsp</result>
+                </action>
+
+
+        </package>
+</struts>

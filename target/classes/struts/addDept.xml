@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+        <struts>
+        <package name="dept" extends="base" namespace="/dept">
+
+                <default-class-ref class="deptAction"/>
+
+                <!--查询部门,为了在List页面显示-->
+                <!--不用了!-->
+                <action name="findDept" method="findDept">
+                        <result name="success">/pages/department/listDepartment.jsp</result>
+                </action>
+
+                <!--添加!!!!!!-->
+                <action name="addDept" method="editDept">
+                        <result name="success" type="redirectAction">deptforPage</result>
+                        <result name="input">/pages/department/addOrEditDepartment.jsp</result>
+                        <result name="error">/pages/department/addOrEditDepartment.jsp</result>
+
+                </action>
+
+                <!--编辑!!!!!
+                      底下的是为了跳到编辑页面!!!
+                      上面执行编辑后保存的方法!!!!!
+                -->
+                <action name="editDept1" method="editDept">
+                        <result name="success" type="redirectAction">findDept</result>
+                        <result name="error">/pages/department/addOrEditDepartment.jsp</result>
+                </action>
+
+                <action name="editDept">
+                        <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+                </action>
+
+
+                <!--为了分页!!!!!-->
+                <action name="deptforPage" method="findAllDeptsForPage">
+                        <result name="success">/pages/department/listDepartment.jsp</result>
+                </action>
+
+        </package>
+</struts>

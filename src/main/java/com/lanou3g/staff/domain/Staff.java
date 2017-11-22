@@ -8,7 +8,8 @@ import javafx.geometry.Pos;
  */
 public class Staff {
     private int staffId;
-    private String loginName,loginPwd,staffName,gender,onDutyDate;
+    private String loginName;
+    private String loginPwd,staffName,gender,onDutyDate;
     private Post post;
 
     public Staff() {

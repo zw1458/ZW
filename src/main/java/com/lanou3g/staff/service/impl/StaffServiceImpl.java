@@ -2,6 +2,7 @@ package com.lanou3g.staff.service.impl;
 
 import com.lanou3g.post.domain.Post;
 import com.lanou3g.staff.dao.StaffDao;
+import com.lanou3g.staff.domain.PagerBean;
 import com.lanou3g.staff.domain.Staff;
 import com.lanou3g.staff.service.StaffService;
 import org.apache.commons.lang3.StringUtils;
@@ -110,6 +111,11 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<Post> getPostByPostId(String postId) {
         return staffDao.getPostByPostId(postId);
+    }
+
+    @Override
+    public PagerBean findStaffsByPage(int currentPage, String deptId, String postId, String staffName) {
+        return staffDao.findStaffsByPage(currentPage, deptId, postId, staffName);
     }
 
 //    @Override

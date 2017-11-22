@@ -1,6 +1,7 @@
 package com.lanou3g.staff.dao;
 
 import com.lanou3g.post.domain.Post;
+import com.lanou3g.staff.domain.PagerBean;
 import com.lanou3g.staff.domain.Staff;
 
 import java.util.List;
@@ -56,4 +57,5 @@ public interface StaffDao{
     List<Post> getPostByPostId(String postId);
 
 
+    PagerBean findStaffsByPage(int currentPage, String deptId, String postId, String staffName);
 }

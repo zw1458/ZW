@@ -1,6 +1,7 @@
 package com.lanou3g.staff.service;
 
 import com.lanou3g.post.domain.Post;
+import com.lanou3g.staff.domain.PagerBean;
 import com.lanou3g.staff.domain.Staff;
 
 import java.util.List;
@@ -37,6 +38,8 @@ public interface StaffService{
 
 
     List<Post> getPostByPostId(String postId);
+
+    PagerBean findStaffsByPage(int currentPage, String deptId, String postId, String staffName);
 
 
 //    List<Staff> getStaffByPostId(String postId);
